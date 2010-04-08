@@ -3,17 +3,12 @@
     <!-- $Id$ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>com.renault.eplatform.batch</groupId>
-        <artifactId>batch-pom</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.renault.eplatform.batch</groupId>
-    <artifactId>vo</artifactId>
-    <name>Renault E-Commerce Platform Vehicule Occasion Batch</name>
-    <description>Renault e-commerce platform vehicule occasion batch.</description>
-    <version>1.2-SNAPSHOT</version>
+    <groupId>fr.sug.springbatch</groupId>
+    <artifactId>example</artifactId>
+    <name>SUG Spring batch</name>
+    <description>SUG Spring batch.</description>
+    <version>1.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework.batch</groupId>
