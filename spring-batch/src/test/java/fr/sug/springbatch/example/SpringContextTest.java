@@ -49,8 +49,15 @@ public class SpringContextTest {
     @DirtiesContext
     public void testLaunchJob() throws Exception {
         Map<String, JobParameter> parameters = new HashMap<String, JobParameter>();
+        parameters.put("recipes", new JobParameter(getResource("recipes.xml")));
+
         JobExecution jobExecution = jobLauncherTestUtils.launchJob(new JobParameters(parameters));
+
         Assert.assertEquals(jobExecution.getExitStatus().getExitDescription(), BatchStatus.COMPLETED, jobExecution.getStatus());
+    }
+
+    String getResource(String path) {
+        return "file://" + Thread.currentThread().getContextClassLoader().getResource(path).getFile();
     }
 
 }
