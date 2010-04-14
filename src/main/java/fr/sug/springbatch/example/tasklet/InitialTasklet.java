@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
  * @author bazoud
  *
  */
-@Component(value = "initialTasklet")
+@Component
 public class InitialTasklet implements Tasklet {
     // logger
     private static final Logger LOG = Logger.getLogger(InitialTasklet.class);
     private static final FastDateFormat DATE_FORMAT = FastDateFormat.getInstance("yyyy/MM/dd HH:mm:ss");
 
     @Override
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
         LOG.info("Initializing at " + DATE_FORMAT.format(new Date()) + ".");
         return null;
     }
