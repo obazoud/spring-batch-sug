@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.sug.springbatch.example.tasklet;
 
@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * Simple initial tasklet.
- * 
+ *
  * @author bazoud
- * 
+ *
  */
 @Component(value = "initialTasklet")
 public class InitialTasklet implements Tasklet {

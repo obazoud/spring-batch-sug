@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!-- Application context definition -->
-    <!--  $Id$ -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-    xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util" xmlns:batch="http://www.springframework.org/schema/batch"
+    <!-- $Id$ -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:lang="http://www.springframework.org/schema/lang" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xmlns:batch="http://www.springframework.org/schema/batch"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
-                        http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
     <!-- parent -->
     <batch:job id="jobBean" abstract="true">
@@ -18,14 +21,8 @@
     <!-- Job -->
     <batch:job id="jobExemple" restartable="true" parent="jobBean">
         <batch:step id="initialStep">
-            <batch:tasklet ref="initializerTasklet" allow-start-if-complete="true">
-                <batch:listeners>
-                    <batch:listener ref="stepExecutionListener" />
-                </batch:listeners>
-            </batch:tasklet>
+            <batch:tasklet ref="initialTasklet" allow-start-if-complete="true" />
         </batch:step>
     </batch:job>
 
-    <!-- Tasklets -->
-    <bean id="initializerTasklet" class="com.renault.eplatform.batch.vo.tasklet.InitializerTasklet" scope="step" />
 </beans>

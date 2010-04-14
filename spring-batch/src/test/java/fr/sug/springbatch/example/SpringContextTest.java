@@ -21,20 +21,20 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * 
+ *
  * A simple test.
- * 
+ *
  * @author bazoud
- * 
+ *
  * @version $Id$
- * 
+ *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:fr/sug/springbatch/example/batch-test-context.xml" })
 public class SpringContextTest {
     // logger
     private static final Logger LOG = Logger.getLogger(SpringContextTest.class);
-    
+
     private SimpleJdbcTemplate simpleJdbcTemplate;
 
     @Autowired
@@ -44,7 +44,7 @@ public class SpringContextTest {
     public void setDataSource(DataSource dataSource) {
         this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
     }
-    
+
     @Test
     @DirtiesContext
     public void testLaunchJob() throws Exception {
@@ -52,5 +52,5 @@ public class SpringContextTest {
         JobExecution jobExecution = jobLauncherTestUtils.launchJob(new JobParameters(parameters));
         Assert.assertEquals(jobExecution.getExitStatus().getExitDescription(), BatchStatus.COMPLETED, jobExecution.getStatus());
     }
-    
+
 }
