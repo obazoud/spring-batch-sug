@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author bazoud
  * @version $Id$
  */
-@Component(value = "jobListener")
+@Component
 public class JobListener implements JobExecutionListener {
     // logger
     private static final Logger LOG = Logger.getLogger(JobListener.class);
