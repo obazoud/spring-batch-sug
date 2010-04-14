@@ -19,10 +19,35 @@
     </batch:job>
 
     <!-- Job -->
-    <batch:job id="jobExemple" restartable="true" parent="jobBean">
+    <batch:job id="jobExemple" parent="jobBean">
         <batch:step id="initialStep">
-            <batch:tasklet ref="initialTasklet" allow-start-if-complete="true" />
+            <batch:tasklet ref="initialTasklet" />
+            <batch:next on="*" to="xmlStep" />
+        </batch:step>
+        <batch:step id="xmlStep">
+            <batch:tasklet>
+                <batch:chunk reader="recipesReader" writer="noOpItemWriter" commit-interval="${job.commit.interval}" />
+            </batch:tasklet>
         </batch:step>
     </batch:job>
 
+    <!--  Reader -->
+    <bean id="recipesReader" class="org.springframework.batch.item.xml.StaxEventItemReader" scope="step">
+        <property name="resource" value="#{jobParameters[recipes]}" />
+        <property name="fragmentRootElementName" value="RECIPE" />
+        <property name="unmarshaller" ref="recipeMarshaller" />
+    </bean>
+
+    <bean id="recipeMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+        <property name="aliases">
+            <util:map>
+                <entry key="RECIPE" value="fr.sug.springbatch.example.beans.Recipe" />
+            </util:map>
+        </property>
+        <property name="converters">
+            <list>
+                <bean class="fr.sug.springbatch.example.xstream.RecipeConverter" />
+            </list>
+        </property>
+    </bean>
 </beans>
