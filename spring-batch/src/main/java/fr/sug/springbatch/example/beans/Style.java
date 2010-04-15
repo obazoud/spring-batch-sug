@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 public class Style implements Serializable {
     String name;
-    String version;
     String category;
+    String version;
     String categoryNumber;
     String styleLetter;
     String styleGuide;
@@ -25,8 +25,8 @@ public class Style implements Serializable {
     String colorMax;
     String carbMin;
     String carbMax;
-    String abvMax;
     String abvMin;
+    String abvMax;
     String notes;
     String profile;
     String ingredients;

@@ -7,8 +7,8 @@ public class MashStep implements Serializable {
     String version;
     String type;
     String infuseAmount;
-    String stepTime;
     String stempTemp;
+    String stepTime;
     String rampTime;
     String endTemp;
     String description;

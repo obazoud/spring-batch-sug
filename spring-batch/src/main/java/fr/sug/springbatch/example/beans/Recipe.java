@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  *
  * @author bazoud
  * @version $Id$
  */
+@XStreamAlias("RECIPE")
 public class Recipe implements Serializable {
+    @XStreamAlias("NAME")
     String name;
     String version;
     String type;
@@ -25,17 +29,23 @@ public class Recipe implements Serializable {
     String tasteRating;
     String og;
     String fg;
-    String carbonation;
     String fermatationStages;
     String primaryAge;
     String primaryTemp;
     String secondaryAge;
     String secondaryTemp;
     String tertiaryAge;
+    String tertiaryTmp;
     String age;
     String ageTemp;
-    String carbonationUsed;
     String dateRecipe;
+    String carbonation;
+    String forceCarbonation;
+    String primingSugarName;
+    String carbonationTemp;
+    String primingSugarEquiv;
+    String kegPrimingFactor;
+
     String estOg;
     String estFg;
     String estColor;
@@ -53,14 +63,17 @@ public class Recipe implements Serializable {
     String displaySecondaryTemp;
     String displayTertiaryTemp;
     String displayAgeTemp;
+    String carbonationUsed;
+    String displayCarbTemp;
+
     List<Hop> hops = new ArrayList<Hop>();
     List<Fermentable> fermentables = new ArrayList<Fermentable>();
     List<Misc> mics = new ArrayList<Misc>();
     List<Yeast> yeasts = new ArrayList<Yeast>();
     List<Water> waters = new ArrayList<Water>();
-    List<Style> styles = new ArrayList<Style>();
-    List<Equipment> equipments = new ArrayList<Equipment>();
-    List<Mash> mashs = new ArrayList<Mash>();
+    Style style = new Style();
+    Equipment equipment = new Equipment();
+    Mash mash = new Mash();
 
     public Recipe() {
     }
@@ -177,14 +190,6 @@ public class Recipe implements Serializable {
         this.fg = fg;
     }
 
-    public String getCarbonation() {
-        return carbonation;
-    }
-
-    public void setCarbonation(String carbonation) {
-        this.carbonation = carbonation;
-    }
-
     public String getFermatationStages() {
         return fermatationStages;
     }
@@ -233,6 +238,14 @@ public class Recipe implements Serializable {
         this.tertiaryAge = tertiaryAge;
     }
 
+    public String getTertiaryTmp() {
+        return tertiaryTmp;
+    }
+
+    public void setTertiaryTmp(String tertiaryTmp) {
+        this.tertiaryTmp = tertiaryTmp;
+    }
+
     public String getAge() {
         return age;
     }
@@ -249,20 +262,60 @@ public class Recipe implements Serializable {
         this.ageTemp = ageTemp;
     }
 
-    public String getCarbonationUsed() {
-        return carbonationUsed;
-    }
-
-    public void setCarbonationUsed(String carbonationUsed) {
-        this.carbonationUsed = carbonationUsed;
-    }
-
     public String getDateRecipe() {
         return dateRecipe;
     }
 
     public void setDateRecipe(String dateRecipe) {
         this.dateRecipe = dateRecipe;
+    }
+
+    public String getCarbonation() {
+        return carbonation;
+    }
+
+    public void setCarbonation(String carbonation) {
+        this.carbonation = carbonation;
+    }
+
+    public String getForceCarbonation() {
+        return forceCarbonation;
+    }
+
+    public void setForceCarbonation(String forceCarbonation) {
+        this.forceCarbonation = forceCarbonation;
+    }
+
+    public String getPrimingSugarName() {
+        return primingSugarName;
+    }
+
+    public void setPrimingSugarName(String primingSugarName) {
+        this.primingSugarName = primingSugarName;
+    }
+
+    public String getCarbonationTemp() {
+        return carbonationTemp;
+    }
+
+    public void setCarbonationTemp(String carbonationTemp) {
+        this.carbonationTemp = carbonationTemp;
+    }
+
+    public String getPrimingSugarEquiv() {
+        return primingSugarEquiv;
+    }
+
+    public void setPrimingSugarEquiv(String primingSugarEquiv) {
+        this.primingSugarEquiv = primingSugarEquiv;
+    }
+
+    public String getKegPrimingFactor() {
+        return kegPrimingFactor;
+    }
+
+    public void setKegPrimingFactor(String kegPrimingFactor) {
+        this.kegPrimingFactor = kegPrimingFactor;
     }
 
     public String getEstOg() {
@@ -401,6 +454,22 @@ public class Recipe implements Serializable {
         this.displayAgeTemp = displayAgeTemp;
     }
 
+    public String getCarbonationUsed() {
+        return carbonationUsed;
+    }
+
+    public void setCarbonationUsed(String carbonationUsed) {
+        this.carbonationUsed = carbonationUsed;
+    }
+
+    public String getDisplayCarbTemp() {
+        return displayCarbTemp;
+    }
+
+    public void setDisplayCarbTemp(String displayCarbTemp) {
+        this.displayCarbTemp = displayCarbTemp;
+    }
+
     public List<Hop> getHops() {
         return hops;
     }
@@ -441,28 +510,27 @@ public class Recipe implements Serializable {
         this.waters = waters;
     }
 
-    public List<Style> getStyles() {
-        return styles;
+    public Style getStyle() {
+        return style;
     }
 
-    public void setStyles(List<Style> styles) {
-        this.styles = styles;
+    public void setStyle(Style style) {
+        this.style = style;
     }
 
-    public List<Equipment> getEquipments() {
-        return equipments;
+    public Equipment getEquipment() {
+        return equipment;
     }
 
-    public void setEquipments(List<Equipment> equipments) {
-        this.equipments = equipments;
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
     }
 
-    public List<Mash> getMashs() {
-        return mashs;
+    public Mash getMash() {
+        return mash;
     }
 
-    public void setMashs(List<Mash> mashs) {
-        this.mashs = mashs;
+    public void setMash(Mash mash) {
+        this.mash = mash;
     }
-
 }

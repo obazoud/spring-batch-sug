@@ -26,8 +26,8 @@ public class Fermentable implements Serializable {
     String recommendMash;
     String ibuGalPerLb;
     String displayAmount;
-    String inventory;
     String potential;
+    String inventory;
     String displayColor;
 
     public Fermentable() {

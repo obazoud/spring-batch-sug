@@ -22,8 +22,8 @@ public class Yeast implements Serializable {
     String attenuation;
     String notes;
     String bestFor;
-    String maxReuse;
     String timesCultured;
+    String maxReuse;
     String addToSecondary;
     String displayAmount;
     String dispMinTemp;
