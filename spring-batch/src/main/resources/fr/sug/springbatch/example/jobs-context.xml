@@ -38,15 +38,19 @@
         <property name="unmarshaller" ref="recipeMarshaller" />
     </bean>
 
-    <bean id="recipeMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
-        <property name="aliases">
-            <util:map>
-                <entry key="RECIPE" value="fr.sug.springbatch.example.beans.Recipe" />
-            </util:map>
-        </property>
-        <property name="converters">
+    <bean id="recipeMarshaller" class="fr.sug.springbatch.example.xstream.XStreamMarshallerFactoryBean">
+        <property name="classes">
             <list>
-                <bean class="fr.sug.springbatch.example.xstream.RecipeConverter" />
+                <value>fr.sug.springbatch.example.beans.Equipment</value>
+                <value>fr.sug.springbatch.example.beans.Fermentable</value>
+                <value>fr.sug.springbatch.example.beans.Hop</value>
+                <value>fr.sug.springbatch.example.beans.Mash</value>
+                <value>fr.sug.springbatch.example.beans.MashStep</value>
+                <value>fr.sug.springbatch.example.beans.Misc</value>
+                <value>fr.sug.springbatch.example.beans.Recipe</value>
+                <value>fr.sug.springbatch.example.beans.Style</value>
+                <value>fr.sug.springbatch.example.beans.Water</value>
+                <value>fr.sug.springbatch.example.beans.Yeast</value>
             </list>
         </property>
     </bean>

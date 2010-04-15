@@ -7,7 +7,7 @@ public class MashStep implements Serializable {
     String version;
     String type;
     String infuseAmount;
-    String stempTemp;
+    String stepTemp;
     String stepTime;
     String rampTime;
     String endTemp;
@@ -58,12 +58,12 @@ public class MashStep implements Serializable {
         this.stepTime = stepTime;
     }
 
-    public String getStempTemp() {
-        return stempTemp;
+    public String getStepTemp() {
+        return stepTemp;
     }
 
-    public void setStempTemp(String stempTemp) {
-        this.stempTemp = stempTemp;
+    public void setStepTemp(String stepTemp) {
+        this.stepTemp = stepTemp;
     }
 
     public String getRampTime() {
