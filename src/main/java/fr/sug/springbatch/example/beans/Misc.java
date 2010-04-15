@@ -12,8 +12,8 @@ public class Misc implements Serializable {
     String version;
     String type;
     String user;
-    String amount;
     String time;
+    String amount;
     String amountIsWeight;
     String useFor;
     String notes;

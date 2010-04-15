@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class Hop implements Serializable {
     String name;
     String version;
-    String origin;
     String alpha;
     String amount;
     String use;
@@ -20,6 +19,13 @@ public class Hop implements Serializable {
     String form;
     String beta;
     String hsi;
+    String origin;
+    String substitutes;
+    String humulene;
+    String caryophyllene;
+    String cohumulone;
+    String myrcene;
+
     String displayAmount;
     String inventory;
     String displayTime;
@@ -41,14 +47,6 @@ public class Hop implements Serializable {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
     }
 
     public String getAlpha() {
@@ -123,6 +121,54 @@ public class Hop implements Serializable {
         this.hsi = hsi;
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public String getSubstitutes() {
+        return substitutes;
+    }
+
+    public void setSubstitutes(String substitutes) {
+        this.substitutes = substitutes;
+    }
+
+    public String getHumulene() {
+        return humulene;
+    }
+
+    public void setHumulene(String humulene) {
+        this.humulene = humulene;
+    }
+
+    public String getCaryophyllene() {
+        return caryophyllene;
+    }
+
+    public void setCaryophyllene(String caryophyllene) {
+        this.caryophyllene = caryophyllene;
+    }
+
+    public String getCohumulone() {
+        return cohumulone;
+    }
+
+    public void setCohumulone(String cohumulone) {
+        this.cohumulone = cohumulone;
+    }
+
+    public String getMyrcene() {
+        return myrcene;
+    }
+
+    public void setMyrcene(String myrcene) {
+        this.myrcene = myrcene;
+    }
+
     public String getDisplayAmount() {
         return displayAmount;
     }
@@ -146,5 +192,4 @@ public class Hop implements Serializable {
     public void setDisplayTime(String displayTime) {
         this.displayTime = displayTime;
     }
-
 }

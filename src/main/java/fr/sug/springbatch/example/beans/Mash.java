@@ -12,14 +12,15 @@ import java.util.List;
 public class Mash implements Serializable {
     String name;
     String version;
+    String type;
     String grainTemp;
+    String notes;
     String tunTemp;
     String spargeTemp;
     String ph;
     String tunWeight;
     String tunSpecificHeat;
     String equipAdjust;
-    String notes;
     String displayGrainTemp;
     String displayTunTemp;
     String displaySpargeTemp;
