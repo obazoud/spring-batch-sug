@@ -4,16 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 /**
  *
  * @author bazoud
  * @version $Id$
  */
-@XStreamAlias("RECIPE")
 public class Recipe implements Serializable {
-    @XStreamAlias("NAME")
     String name;
     String version;
     String type;
@@ -29,7 +25,7 @@ public class Recipe implements Serializable {
     String tasteRating;
     String og;
     String fg;
-    String fermatationStages;
+    String fermentationStages;
     String primaryAge;
     String primaryTemp;
     String secondaryAge;
@@ -38,7 +34,7 @@ public class Recipe implements Serializable {
     String tertiaryTmp;
     String age;
     String ageTemp;
-    String dateRecipe;
+    String date;
     String carbonation;
     String forceCarbonation;
     String primingSugarName;
@@ -68,7 +64,7 @@ public class Recipe implements Serializable {
 
     List<Hop> hops = new ArrayList<Hop>();
     List<Fermentable> fermentables = new ArrayList<Fermentable>();
-    List<Misc> mics = new ArrayList<Misc>();
+    List<Misc> miscs = new ArrayList<Misc>();
     List<Yeast> yeasts = new ArrayList<Yeast>();
     List<Water> waters = new ArrayList<Water>();
     Style style = new Style();
@@ -190,12 +186,12 @@ public class Recipe implements Serializable {
         this.fg = fg;
     }
 
-    public String getFermatationStages() {
-        return fermatationStages;
+    public String getFermentationStages() {
+        return fermentationStages;
     }
 
-    public void setFermatationStages(String fermatationStages) {
-        this.fermatationStages = fermatationStages;
+    public void setFermentationStages(String fermentationStages) {
+        this.fermentationStages = fermentationStages;
     }
 
     public String getPrimaryAge() {
@@ -262,12 +258,12 @@ public class Recipe implements Serializable {
         this.ageTemp = ageTemp;
     }
 
-    public String getDateRecipe() {
-        return dateRecipe;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateRecipe(String dateRecipe) {
-        this.dateRecipe = dateRecipe;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getCarbonation() {
@@ -486,12 +482,12 @@ public class Recipe implements Serializable {
         this.fermentables = fermentables;
     }
 
-    public List<Misc> getMics() {
-        return mics;
+    public List<Misc> getMiscs() {
+        return miscs;
     }
 
-    public void setMics(List<Misc> mics) {
-        this.mics = mics;
+    public void setMiscs(List<Misc> miscs) {
+        this.miscs = miscs;
     }
 
     public List<Yeast> getYeasts() {
@@ -533,4 +529,5 @@ public class Recipe implements Serializable {
     public void setMash(Mash mash) {
         this.mash = mash;
     }
+
 }

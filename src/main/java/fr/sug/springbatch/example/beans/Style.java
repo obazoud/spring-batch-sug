@@ -31,10 +31,10 @@ public class Style implements Serializable {
     String profile;
     String ingredients;
     String examples;
-    String displayObMin;
-    String displayObMax;
-    String displayfgMin;
+    String displayOgMin;
     String displayOgMax;
+    String displayFgMin;
+    String displayFgMax;
     String displayColorMin;
     String displayColorMax;
     String ogRange;
@@ -48,8 +48,12 @@ public class Style implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getVersion() {
@@ -58,14 +62,6 @@ public class Style implements Serializable {
 
     public void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getCategoryNumber() {
@@ -180,20 +176,20 @@ public class Style implements Serializable {
         this.carbMax = carbMax;
     }
 
-    public String getAbvMax() {
-        return abvMax;
-    }
-
-    public void setAbvMax(String abvMax) {
-        this.abvMax = abvMax;
-    }
-
     public String getAbvMin() {
         return abvMin;
     }
 
     public void setAbvMin(String abvMin) {
         this.abvMin = abvMin;
+    }
+
+    public String getAbvMax() {
+        return abvMax;
+    }
+
+    public void setAbvMax(String abvMax) {
+        this.abvMax = abvMax;
     }
 
     public String getNotes() {
@@ -228,28 +224,12 @@ public class Style implements Serializable {
         this.examples = examples;
     }
 
-    public String getDisplayObMin() {
-        return displayObMin;
+    public String getDisplayOgMin() {
+        return displayOgMin;
     }
 
-    public void setDisplayObMin(String displayObMin) {
-        this.displayObMin = displayObMin;
-    }
-
-    public String getDisplayObMax() {
-        return displayObMax;
-    }
-
-    public void setDisplayObMax(String displayObMax) {
-        this.displayObMax = displayObMax;
-    }
-
-    public String getDisplayfgMin() {
-        return displayfgMin;
-    }
-
-    public void setDisplayfgMin(String displayfgMin) {
-        this.displayfgMin = displayfgMin;
+    public void setDisplayOgMin(String displayOgMin) {
+        this.displayOgMin = displayOgMin;
     }
 
     public String getDisplayOgMax() {
@@ -258,6 +238,22 @@ public class Style implements Serializable {
 
     public void setDisplayOgMax(String displayOgMax) {
         this.displayOgMax = displayOgMax;
+    }
+
+    public String getDisplayFgMin() {
+        return displayFgMin;
+    }
+
+    public void setDisplayFgMin(String displayFgMin) {
+        this.displayFgMin = displayFgMin;
+    }
+
+    public String getDisplayFgMax() {
+        return displayFgMax;
+    }
+
+    public void setDisplayFgMax(String displayFgMax) {
+        this.displayFgMax = displayFgMax;
     }
 
     public String getDisplayColorMin() {
@@ -322,6 +318,10 @@ public class Style implements Serializable {
 
     public void setAbvRange(String abvRange) {
         this.abvRange = abvRange;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

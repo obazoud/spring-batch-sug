@@ -11,7 +11,7 @@ public class Misc implements Serializable {
     String name;
     String version;
     String type;
-    String user;
+    String use;
     String time;
     String amount;
     String amountIsWeight;
@@ -49,12 +49,12 @@ public class Misc implements Serializable {
         this.type = type;
     }
 
-    public String getUser() {
-        return user;
+    public String getUse() {
+        return use;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUse(String use) {
+        this.use = use;
     }
 
     public String getAmount() {

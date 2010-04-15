@@ -19,7 +19,7 @@ public class Equipment implements Serializable {
     String trubChillerLoss;
     String evapRate;
     String boilTime;
-    String CalcBoilVolume;
+    String calcBoilVolume;
     String lauterDeadspace;
     String topUpKettle;
     String hopUtilization;
@@ -122,11 +122,11 @@ public class Equipment implements Serializable {
     }
 
     public String getCalcBoilVolume() {
-        return CalcBoilVolume;
+        return calcBoilVolume;
     }
 
     public void setCalcBoilVolume(String calcBoilVolume) {
-        CalcBoilVolume = calcBoilVolume;
+        this.calcBoilVolume = calcBoilVolume;
     }
 
     public String getLauterDeadspace() {
