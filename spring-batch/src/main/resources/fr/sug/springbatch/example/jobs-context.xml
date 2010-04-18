@@ -22,11 +22,18 @@
     <batch:job id="jobExemple" parent="jobBean">
         <batch:step id="initialStep">
             <batch:tasklet ref="initialTasklet" />
-            <batch:next on="*" to="xmlStep" />
+            <batch:next on="*" to="recipeStep" />
         </batch:step>
-        <batch:step id="xmlStep">
+        <batch:step id="recipeStep">
             <batch:tasklet>
-                <batch:chunk reader="recipesReader" writer="recipesWriter" processor="recipesProcessor" commit-interval="${job.commit.interval}" />
+                <batch:chunk reader="recipesReader" writer="recipesWriter" processor="recipesProcessor" commit-interval="${job.commit.interval}">
+                    <batch:streams>
+                        <batch:stream ref="recipeExcludeWriter" />
+                    </batch:streams>
+                </batch:chunk>
+                <batch:listeners>
+                    <batch:listener ref="stepRecipeExecutionListener" />
+                </batch:listeners>
             </batch:tasklet>
         </batch:step>
     </batch:job>
@@ -54,6 +61,10 @@
         </property>
     </bean>
 
+    <bean id="stepRecipeExecutionListener" class="fr.sug.springbatch.example.listener.StepRecipeExecutionListener">
+        <property name="recipeExcludeWriter" ref="recipeExcludeWriter" />
+    </bean>
+    
     <!-- Processor -->
     <bean id="recipesProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
         <property name="delegates">
@@ -155,6 +166,13 @@
             INSERT INTO Water (amount,bicarbonate,calcium,chloride,displayAmount,id,magnesium,name,notes,ph,recipeId,sodium,sulfate,version) VALUES (
             :amount,:bicarbonate,:calcium,:chloride,:displayAmount,:id,:magnesium,:name,:notes,:ph,:recipeId,:sodium,:sulfate,:version)
             ]]></value>
+        </property>
+    </bean>
+
+    <bean id="recipeExcludeWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+        <property name="resource" value="file:///tmp/sug/recipesexcludes.txt" />
+        <property name="lineAggregator">
+            <bean class="fr.sug.springbatch.example.writer.RecipeExcludeLineAggregator" />
         </property>
     </bean>
 
