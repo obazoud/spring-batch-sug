@@ -3,11 +3,12 @@ package fr.sug.springbatch.example.beans;
 import java.io.Serializable;
 
 /**
- *
+ * 
  * @author bazoud
  * @version $Id$
  */
 public class Style implements Serializable {
+    String id;
     String name;
     String category;
     String version;
@@ -43,6 +44,14 @@ public class Style implements Serializable {
     String carbRange;
     String colorRange;
     String abvRange;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

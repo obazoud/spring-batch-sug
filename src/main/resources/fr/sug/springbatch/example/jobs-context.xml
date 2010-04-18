@@ -26,7 +26,7 @@
         </batch:step>
         <batch:step id="xmlStep">
             <batch:tasklet>
-                <batch:chunk reader="recipesReader" writer="noOpItemWriter" commit-interval="${job.commit.interval}" />
+                <batch:chunk reader="recipesReader" writer="recipesWriter" processor="recipesProcessor" commit-interval="${job.commit.interval}" />
             </batch:tasklet>
         </batch:step>
     </batch:job>
@@ -37,7 +37,6 @@
         <property name="fragmentRootElementName" value="RECIPE" />
         <property name="unmarshaller" ref="recipeMarshaller" />
     </bean>
-
     <bean id="recipeMarshaller" class="fr.sug.springbatch.example.xstream.XStreamMarshallerFactoryBean">
         <property name="classes">
             <list>
@@ -54,4 +53,109 @@
             </list>
         </property>
     </bean>
+
+    <!-- Processor -->
+    <bean id="recipesProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
+        <property name="delegates">
+            <list>
+                <bean class="fr.sug.springbatch.example.processor.IdProcessor" />
+                <bean class="fr.sug.springbatch.example.processor.RecipeProcessor" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- Writer -->
+    <bean id="recipesWriter" class="fr.sug.springbatch.example.writer.RecipeItemWriter">
+        <property name="dataSource" ref="dataSource" />
+        <property name="recipeSql">
+            <value><![CDATA[
+            INSERT INTO Recipe (abv,actualEfficiency,age,ageTemp,asstBrewer,batchSize,boilSize,boilTime,brewer,calories,carbonation, 
+            carbonationTemp,carbonationUsed,date,displayAgeTemp,displayBatchSize,displayBoilSize,displayCarbTemp,displayFg,displayOg, 
+            displayPrimaryTemp,displaySecondaryTemp,displayTertiaryTemp,efficiency,estAbv,estColor,estFg,estOg,fermentationStages,fg, 
+            forceCarbonation,ibu,ibuMethod,id,kegPrimingFactor,name,notes,og,primaryAge,primaryTemp,primingSugarEquiv,primingSugarName, 
+            secondaryAge,secondaryTemp,tasteNotes,tasteRating,tertiaryAge,tertiaryTmp,type,version)
+            VALUES (:abv,:actualEfficiency,:age,:ageTemp,:asstBrewer,:batchSize,:boilSize,:boilTime,:brewer,:calories,:carbonation, 
+            :carbonationTemp,:carbonationUsed,:date,:displayAgeTemp,:displayBatchSize,:displayBoilSize,:displayCarbTemp,:displayFg, 
+            :displayOg,:displayPrimaryTemp,:displaySecondaryTemp,:displayTertiaryTemp,:efficiency,:estAbv,:estColor,:estFg,:estOg, 
+            :fermentationStages,:fg,:forceCarbonation,:ibu,:ibuMethod,:id,:kegPrimingFactor,:name,:notes,:og,:primaryAge,:primaryTemp, 
+            :primingSugarEquiv,:primingSugarName,:secondaryAge,:secondaryTemp,:tasteNotes,:tasteRating,:tertiaryAge,:tertiaryTmp, 
+            :type,:version)
+            ]]></value>
+        </property>
+        <property name="hopSql">
+            <value><![CDATA[
+            INSERT INTO Hop (alpha,amount,beta,caryophyllene,cohumulone,displayAmount,displayTime,form,hsi,humulene,id,inventory,myrcene,
+            name,notes,origin,recipeId,substitutes,time,type,use,version) VALUES (:alpha,:amount,:beta,:caryophyllene,:cohumulone,
+            :displayAmount,:displayTime,:form,:hsi,:humulene,:id,:inventory,:myrcene,:name,:notes,:origin,:recipeId,:substitutes,:time,
+            :type,:use,:version)
+            ]]></value>
+        </property>
+        <property name="fermentableSql">
+            <value><![CDATA[
+            INSERT INTO Fermentable (addAfterBoil,amount,coarseFineDiff,color,diastaticPower,displayAmount,displayColor,ibuGalPerLb,
+            id,inventory,maxInBatch,moisture,name,notes,origin,potential,protein,recipeId,recommendMash,supplier,type,version,yield) VALUES (
+            :addAfterBoil,:amount,:coarseFineDiff,:color,:diastaticPower,:displayAmount,:displayColor,:ibuGalPerLb,:id,:inventory,:maxInBatch,
+            :moisture,:name,:notes,:origin,:potential,:protein,:recipeId,:recommendMash,:supplier,:type,:version,:yield)
+            ]]></value>
+        </property>
+        <property name="miscSql">
+            <value><![CDATA[
+            INSERT INTO Misc (amount,amountIsWeight,batchSize,displayAmount,displayTime,id,inventory,name,notes,recipeId,time,type,use,useFor,
+            version) VALUES (:amount,:amountIsWeight,:batchSize,:displayAmount,:displayTime,:id,:inventory,:name,:notes,:recipeId,:time,:type,
+            :use,:useFor,:version)
+            ]]>
+            </value>
+        </property>
+        <property name="yeastSql">
+            <value><![CDATA[
+            INSERT INTO Yeast (addToSecondary,amount,amountIsWeight,attenuation,bestFor,cultureDate,displayAmount,dispMaxTemp,dispMinTemp,
+            flocculation,form,id,inventory,laboratory,maxReuse,maxTemperature,minTemperature,name,notes,productId,recipeId,timesCultured,
+            type,version) VALUES (:addToSecondary,:amount,:amountIsWeight,:attenuation,:bestFor,:cultureDate,:displayAmount,:dispMaxTemp,
+            :dispMinTemp,:flocculation,:form,:id,:inventory,:laboratory,:maxReuse,:maxTemperature,:minTemperature,:name,:notes,:productId,
+            :recipeId,:timesCultured,:type,:version)
+            ]]></value>
+        </property>
+        <property name="styleSql">
+            <value><![CDATA[
+            INSERT INTO Style (abvMax,abvMin,abvRange,carbMax,carbMin,carbRange,category,categoryNumber,colorMax,colorMin,colorRange,
+            displayColorMax,displayColorMin,displayFgMax,displayFgMin,displayOgMax,displayOgMin,examples,fgMax,fgMin,fgRange,ibuMax,ibuMin,
+            ibuRange,id,ingredients,name,notes,ogMax,ogMin,ogRange,profile,styleGuide,styleLetter,type,version) VALUES (:abvMax,:abvMin,:abvRange,
+            :carbMax,:carbMin,:carbRange,:category,:categoryNumber,:colorMax,:colorMin,:colorRange,:displayColorMax,:displayColorMin,:displayFgMax,
+            :displayFgMin,:displayOgMax,:displayOgMin,:examples,:fgMax,:fgMin,:fgRange,:ibuMax,:ibuMin,:ibuRange,:id,:ingredients,:name,:notes,
+            :ogMax,:ogMin,:ogRange,:profile,:styleGuide,:styleLetter,:type,:version)
+            ]]></value>
+        </property>
+        <property name="equipmentSql">
+            <value><![CDATA[
+            INSERT INTO Equipment (batchSize,boilSize,boilTime,calcBoilVolume,displayBatchSize,displayBoilSize,displayLauterDeadspace,
+            displayTopUpKettle,displayTopUpWater,displayTrubChillerLoss,displayTunVolume,displayTunWeight,evapRate,hopUtilization,id,lauterDeadspace,
+            name,notes,topUpKettle,topUpWater,trubChillerLoss,tunSpecificHeat,tunVolume,tunWeight,version) VALUES (:batchSize,:boilSize,:boilTime,
+            :calcBoilVolume,:displayBatchSize,:displayBoilSize,:displayLauterDeadspace,:displayTopUpKettle,:displayTopUpWater,:displayTrubChillerLoss,
+            :displayTunVolume,:displayTunWeight,:evapRate,:hopUtilization,:id,:lauterDeadspace,:name,:notes,:topUpKettle,:topUpWater,:trubChillerLoss,
+            :tunSpecificHeat,:tunVolume,:tunWeight,:version)
+            ]]></value>
+        </property>
+        <property name="mashSql">
+            <value><![CDATA[
+            INSERT INTO Mash (displayGrainTemp,displaySpargeTemp,displayTunTemp,displayTunWeight,equipAdjust,grainTemp,id,name,notes,ph,spargeTemp,
+            tunSpecificHeat,tunTemp,tunWeight,type,version) VALUES (:displayGrainTemp,:displaySpargeTemp,:displayTunTemp,:displayTunWeight,
+            :equipAdjust,:grainTemp,:id,:name,:notes,:ph,:spargeTemp,:tunSpecificHeat,:tunTemp,:tunWeight,:type,:version)
+            ]]>
+            </value>
+        </property>
+        <property name="mashStepSql">
+            <value><![CDATA[
+            INSERT INTO MashStep (decoctionAmt,description,displayInfuseAmt,displayStepTemp,endTemp,id,infuseAmount,infuseTemp,mashId,name,
+            rampTime,stepTemp,stepTime,type,version,waterGrainRatio) VALUES (:decoctionAmt,:description,:displayInfuseAmt,:displayStepTemp,
+            :endTemp,:infuseAmount,:id,:infuseTemp,:mashId,:name,:rampTime,:stepTemp,:stepTime,:type,:version,:waterGrainRatio)
+            ]]></value>
+        </property>
+        <property name="waterSql">
+            <value><![CDATA[
+            INSERT INTO Water (amount,bicarbonate,calcium,chloride,displayAmount,id,magnesium,name,notes,ph,recipeId,sodium,sulfate,version) VALUES (
+            :amount,:bicarbonate,:calcium,:chloride,:displayAmount,:id,:magnesium,:name,:notes,:ph,:recipeId,:sodium,:sulfate,:version)
+            ]]></value>
+        </property>
+    </bean>
+
 </beans>

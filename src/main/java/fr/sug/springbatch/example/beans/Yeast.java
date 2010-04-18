@@ -3,11 +3,13 @@ package fr.sug.springbatch.example.beans;
 import java.io.Serializable;
 
 /**
- *
+ * 
  * @author bazoud
  * @version $Id$
  */
 public class Yeast implements Serializable {
+    String id;
+    String recipeId;
     String name;
     String version;
     String type;
@@ -30,6 +32,22 @@ public class Yeast implements Serializable {
     String dispMaxTemp;
     String inventory;
     String cultureDate;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(String recipeId) {
+        this.recipeId = recipeId;
+    }
 
     public String getName() {
         return name;

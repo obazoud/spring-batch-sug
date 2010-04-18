@@ -30,6 +30,7 @@
         <property name="initScripts">
             <list>
                 <value>classpath:org/springframework/batch/core/schema-h2.sql</value>
+                <value>classpath:fr/sug/springbatch/example/schema-recipe.sql</value>
             </list>
         </property>
     </bean>

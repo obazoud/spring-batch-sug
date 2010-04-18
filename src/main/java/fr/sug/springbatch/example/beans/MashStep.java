@@ -3,6 +3,8 @@ package fr.sug.springbatch.example.beans;
 import java.io.Serializable;
 
 public class MashStep implements Serializable {
+    String id;
+    String mashId;
     String name;
     String version;
     String type;
@@ -17,6 +19,22 @@ public class MashStep implements Serializable {
     String infuseTemp;
     String displayStepTemp;
     String displayInfuseAmt;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMashId() {
+        return mashId;
+    }
+
+    public void setMashId(String mashId) {
+        this.mashId = mashId;
+    }
 
     public String getName() {
         return name;

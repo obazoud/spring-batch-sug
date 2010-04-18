@@ -8,6 +8,7 @@ import java.io.Serializable;
  * @version $Id$
  */
 public class Equipment implements Serializable {
+    String id;
     String name;
     String version;
     String boilSize;
@@ -33,6 +34,14 @@ public class Equipment implements Serializable {
     String displayLauterDeadspace;
     String displayTopUpKettle;
 
+    public String getId() {
+        return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getName() {
         return name;
     }

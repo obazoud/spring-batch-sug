@@ -15,4 +15,6 @@
     <import resource="classpath:fr/sug/springbatch/example/application-context-springbatch.xml" />
     <import resource="classpath:fr/sug/springbatch/example/jobs-context.xml" />
 
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+
 </beans>

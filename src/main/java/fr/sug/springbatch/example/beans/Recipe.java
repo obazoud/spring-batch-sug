@@ -10,6 +10,7 @@ import java.util.List;
  * @version $Id$
  */
 public class Recipe implements Serializable {
+    String id;
     String name;
     String version;
     String type;
@@ -72,6 +73,14 @@ public class Recipe implements Serializable {
     Mash mash = new Mash();
 
     public Recipe() {
+    }
+    
+    public String getId() {
+        return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
