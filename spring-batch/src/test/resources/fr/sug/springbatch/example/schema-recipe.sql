@@ -76,7 +76,8 @@ CREATE TABLE Hop (
 	type VARCHAR(50),
 	use1 VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id, recipeId)
+	PRIMARY KEY (id, recipeId),
+	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
 CREATE TABLE Fermentable (
@@ -103,7 +104,8 @@ CREATE TABLE Fermentable (
 	type VARCHAR(50),
 	version VARCHAR(50),
 	yield VARCHAR(50),
-	PRIMARY KEY (id, recipeId)
+	PRIMARY KEY (id, recipeId),
+	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
 CREATE TABLE Misc (
@@ -122,7 +124,8 @@ CREATE TABLE Misc (
 	use1 VARCHAR(50),
 	useFor VARCHAR(50),
 	version VARCHAR(50),	
-	PRIMARY KEY (id, recipeId)
+	PRIMARY KEY (id, recipeId),
+	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
 CREATE TABLE Yeast (
@@ -150,7 +153,8 @@ CREATE TABLE Yeast (
 	timesCultured VARCHAR(50),
 	type VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id, recipeId)
+	PRIMARY KEY (id, recipeId),
+	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
 CREATE TABLE Style (
@@ -190,7 +194,8 @@ CREATE TABLE Style (
 	styleLetter VARCHAR(50),
 	type VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	FOREIGN KEY (id) REFERENCES Recipe(id)
 );
 
 CREATE TABLE Equipment (
@@ -219,7 +224,8 @@ CREATE TABLE Equipment (
 	tunVolume VARCHAR(50),
 	tunWeight VARCHAR(50),
 	version VARCHAR(50),	
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	FOREIGN KEY (id) REFERENCES Recipe(id)
 );
 
 CREATE TABLE Mash (
@@ -239,7 +245,8 @@ CREATE TABLE Mash (
 	tunWeight VARCHAR(50),
 	type VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	FOREIGN KEY (id) REFERENCES Recipe(id)
 );
 
 CREATE TABLE MashStep (
@@ -259,7 +266,8 @@ CREATE TABLE MashStep (
 	type VARCHAR(50),
 	version VARCHAR(50),
 	waterGrainRatio VARCHAR(50),
-	PRIMARY KEY (id, mashId)
+	PRIMARY KEY (id, mashId),
+	FOREIGN KEY (mashId) REFERENCES Mash(id)
 );
 
 CREATE TABLE Water (
@@ -277,16 +285,6 @@ CREATE TABLE Water (
 	sodium VARCHAR(50),
 	sulfate VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id, recipeId)
+	PRIMARY KEY (id, recipeId),
+	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
-
-ALTER TABLE Hop add CONSTRAINT FKHopRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
-ALTER TABLE Fermentable add CONSTRAINT FKFermentableRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
-ALTER TABLE Misc add CONSTRAINT FKMiscRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
-ALTER TABLE Yeast add CONSTRAINT FKYeastRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
-ALTER TABLE Style add CONSTRAINT FKStyleRecipe FOREIGN KEY (id) REFERENCES Recipe (id);
-ALTER TABLE Equipment add CONSTRAINT FKEquipmentRecipe FOREIGN KEY (id) REFERENCES Recipe (id);
-ALTER TABLE Mash add CONSTRAINT FKMashRecipe FOREIGN KEY (id) REFERENCES Recipe (id);
-ALTER TABLE MashStep add CONSTRAINT FKMashStepRecipe FOREIGN KEY (mashId) REFERENCES Mash (id);
-
-
