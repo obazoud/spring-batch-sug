@@ -28,6 +28,7 @@ class Mash implements Serializable {
     String tunweight
     String type
     String version
+    static hasMany = [ mashSteps : MashStep ]
 
     static constraints = {
         id(size: 1..36, blank: false)
