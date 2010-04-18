@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * Read beer recipes data from XML file and insert it into a database.
@@ -20,6 +21,8 @@ import java.util.UUID;
 public class PlainOldBatch {
 
     private SimpleJdbcTemplate jdbcTemplate;
+
+    private Logger LOG = Logger.getLogger("PlainOldBatch");
 
     public static void main(String[] args) throws JDOMException, IOException, SQLException {
         // Parse args:
@@ -47,13 +50,17 @@ public class PlainOldBatch {
      */
     @SuppressWarnings("unchecked")
     private void run(String inputFileName) throws JDOMException, IOException, SQLException {
+
         // Read XML file:
+        LOG.info("Reading XML...");
         Document dom = new SAXBuilder(false).build(inputFileName);
 
         // Get the recipes:
         List<Element> recipes = dom.getRootElement().getChildren();
+        LOG.info(String.format("%d recipes read",recipes.size()));
 
         // Write recipes:
+        LOG.info("Write receipes...");
         for (Element recipe : recipes) {
             String recipeId = insertRecipe(recipe);
 
