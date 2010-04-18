@@ -1,10 +1,14 @@
 package fr.sug.springbatch.example;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,6 +49,7 @@ public class SpringContextTest {
         this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     @DirtiesContext
     public void testLaunchJob() throws Exception {
@@ -84,6 +89,13 @@ public class SpringContextTest {
         String mashId = simpleJdbcTemplate.queryForObject("SELECT id FROM Mash where id=:recipeId", String.class, argsRecipe);
         argsRecipe.put("mashId", mashId);        
         Assert.assertEquals(2, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from MashStep where mashId=:mashId", argsRecipe));
+        
+        File excludes = new File("/tmp/sug/recipesexcludes.txt");
+        Assert.assertTrue(excludes.exists());
+        List<String> content = IOUtils.readLines(new FileInputStream(excludes));
+        Assert.assertEquals(2, content.size());
+        Assert.assertEquals("Wit", content.get(0));
+        Assert.assertEquals("", content.get(1));
     }
 
     String getResource(String path) {
