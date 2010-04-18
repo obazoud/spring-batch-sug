@@ -1,0 +1,32 @@
+<!-- $Id: assembly.xml 49737 2010-04-14 12:10:23Z esnault $ -->
+<assembly>
+    <formats>
+       <format>dir</format>
+    </formats>
+    <fileSets>
+       <fileSet>
+           <directory>target</directory>
+           <outputDirectory>lib</outputDirectory>
+           <includes>
+               <include>*.jar</include>
+           </includes>
+       </fileSet>
+       <fileSet>
+           <directory>src/main/resources</directory>
+           <outputDirectory></outputDirectory>
+       </fileSet>
+    </fileSets>
+    <files>
+       <file>
+           <source>src/main/shell/run.sh</source>
+           <fileMode>0755</fileMode>
+           <lineEnding>unix</lineEnding>
+       </file>
+    </files>
+    <dependencySets>
+       <dependencySet>
+           <scope>runtime</scope>
+           <outputDirectory>lib</outputDirectory>
+       </dependencySet>
+    </dependencySets>
+</assembly>
