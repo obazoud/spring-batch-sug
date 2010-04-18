@@ -74,7 +74,7 @@ CREATE TABLE Hop (
 	substitutes VARCHAR(50),
 	time VARCHAR(50),
 	type VARCHAR(50),
-	use VARCHAR(50),
+	use1 VARCHAR(50),
 	version VARCHAR(50),
 	PRIMARY KEY (id, recipeId)
 );
@@ -119,7 +119,7 @@ CREATE TABLE Misc (
 	recipeId VARCHAR(36) NOT NULL,
 	time VARCHAR(50),
 	type VARCHAR(50),
-	use VARCHAR(50),
+	use1 VARCHAR(50),
 	useFor VARCHAR(50),
 	version VARCHAR(50),	
 	PRIMARY KEY (id, recipeId)

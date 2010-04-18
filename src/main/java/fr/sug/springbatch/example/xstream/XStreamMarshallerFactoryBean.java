@@ -10,6 +10,9 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
+import fr.sug.springbatch.example.beans.Hop;
+import fr.sug.springbatch.example.beans.Misc;
+
 public class XStreamMarshallerFactoryBean implements FactoryBean<XStreamMarshaller>, InitializingBean {
     XStreamMarshaller marshaller;
     List<Class<?>> classes;
@@ -29,6 +32,10 @@ public class XStreamMarshallerFactoryBean implements FactoryBean<XStreamMarshall
                 }
             }
         }
+        
+        // fix
+        marshaller.getXStream().aliasField("USE", Hop.class, "use1");
+        marshaller.getXStream().aliasField("USE", Misc.class, "use1");
     }
 
     private String transformClass(String in) {

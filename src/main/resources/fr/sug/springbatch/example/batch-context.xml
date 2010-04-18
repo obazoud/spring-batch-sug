@@ -15,6 +15,11 @@
     <import resource="classpath:fr/sug/springbatch/example/application-context-springbatch.xml" />
     <import resource="classpath:fr/sug/springbatch/example/jobs-context.xml" />
 
+    <context:annotation-config />
+    <context:component-scan base-package="fr.sug.springbatch.example" />
+    <context:property-placeholder location="classpath:fr/sug/springbatch/example/beer.properties" />
+    <aop:aspectj-autoproxy />
+
     <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
 
 </beans>

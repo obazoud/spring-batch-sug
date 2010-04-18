@@ -96,9 +96,9 @@
         <property name="hopSql">
             <value><![CDATA[
             INSERT INTO Hop (alpha,amount,beta,caryophyllene,cohumulone,displayAmount,displayTime,form,hsi,humulene,id,inventory,myrcene,
-            name,notes,origin,recipeId,substitutes,time,type,use,version) VALUES (:alpha,:amount,:beta,:caryophyllene,:cohumulone,
+            name,notes,origin,recipeId,substitutes,time,type,use1,version) VALUES (:alpha,:amount,:beta,:caryophyllene,:cohumulone,
             :displayAmount,:displayTime,:form,:hsi,:humulene,:id,:inventory,:myrcene,:name,:notes,:origin,:recipeId,:substitutes,:time,
-            :type,:use,:version)
+            :type,:use1,:version)
             ]]></value>
         </property>
         <property name="fermentableSql">
@@ -111,9 +111,9 @@
         </property>
         <property name="miscSql">
             <value><![CDATA[
-            INSERT INTO Misc (amount,amountIsWeight,batchSize,displayAmount,displayTime,id,inventory,name,notes,recipeId,time,type,use,useFor,
+            INSERT INTO Misc (amount,amountIsWeight,batchSize,displayAmount,displayTime,id,inventory,name,notes,recipeId,time,type,use1,useFor,
             version) VALUES (:amount,:amountIsWeight,:batchSize,:displayAmount,:displayTime,:id,:inventory,:name,:notes,:recipeId,:time,:type,
-            :use,:useFor,:version)
+            :use1,:useFor,:version)
             ]]>
             </value>
         </property>

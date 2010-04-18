@@ -14,7 +14,7 @@ public class Hop implements Serializable {
     String version;
     String alpha;
     String amount;
-    String use;
+    String use1;
     String time;
     String notes;
     String type;
@@ -83,12 +83,12 @@ public class Hop implements Serializable {
         this.amount = amount;
     }
 
-    public String getUse() {
-        return use;
+    public String getUse1() {
+        return use1;
     }
 
-    public void setUse(String use) {
-        this.use = use;
+    public void setUse1(String use1) {
+        this.use1 = use1;
     }
 
     public String getTime() {
