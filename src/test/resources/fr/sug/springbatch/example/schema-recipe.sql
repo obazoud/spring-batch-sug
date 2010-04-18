@@ -280,3 +280,13 @@ CREATE TABLE Water (
 	PRIMARY KEY (id, recipeId)
 );
 
+ALTER TABLE Hop add CONSTRAINT FKHopRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
+ALTER TABLE Fermentable add CONSTRAINT FKFermentableRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
+ALTER TABLE Misc add CONSTRAINT FKMiscRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
+ALTER TABLE Yeast add CONSTRAINT FKYeastRecipe FOREIGN KEY (recipeId) REFERENCES Recipe (id);
+ALTER TABLE Style add CONSTRAINT FKStyleRecipe FOREIGN KEY (id) REFERENCES Recipe (id);
+ALTER TABLE Equipment add CONSTRAINT FKEquipmentRecipe FOREIGN KEY (id) REFERENCES Recipe (id);
+ALTER TABLE Mash add CONSTRAINT FKMashRecipe FOREIGN KEY (id) REFERENCES Recipe (id);
+ALTER TABLE MashStep add CONSTRAINT FKMashStepRecipe FOREIGN KEY (mashId) REFERENCES Mash (id);
+
+
