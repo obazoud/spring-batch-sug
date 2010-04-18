@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 
  * @author bazoud
  * @version $Id$
  */
 public class Mash implements Serializable {
+    String id;
     String name;
     String version;
     String type;
@@ -26,6 +27,14 @@ public class Mash implements Serializable {
     String displaySpargeTemp;
     String displayTunWeight;
     List<MashStep> mashSteps = new ArrayList<MashStep>();
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -137,6 +146,14 @@ public class Mash implements Serializable {
 
     public void setDisplayTunWeight(String displayTunWeight) {
         this.displayTunWeight = displayTunWeight;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public List<MashStep> getMashSteps() {
