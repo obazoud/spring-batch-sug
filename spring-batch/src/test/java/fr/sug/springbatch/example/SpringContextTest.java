@@ -25,13 +25,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * 
+ *
  * A simple test.
- * 
+ *
  * @author bazoud
- * 
+ *
  * @version $Id$
- * 
+ *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:fr/sug/springbatch/example/batch-test-context.xml" })
@@ -87,15 +87,14 @@ public class SpringContextTest {
         Assert.assertEquals(1, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Equipment where id=:recipeId", argsRecipe));
         Assert.assertEquals(1, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Mash where id=:recipeId", argsRecipe));
         String mashId = simpleJdbcTemplate.queryForObject("SELECT id FROM Mash where id=:recipeId", String.class, argsRecipe);
-        argsRecipe.put("mashId", mashId);        
+        argsRecipe.put("mashId", mashId);
         Assert.assertEquals(2, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from MashStep where mashId=:mashId", argsRecipe));
-        
+
         File excludes = new File("/tmp/sug/recipesexcludes.txt");
         Assert.assertTrue(excludes.exists());
         List<String> content = IOUtils.readLines(new FileInputStream(excludes));
-        Assert.assertEquals(2, content.size());
+        Assert.assertEquals(1, content.size());
         Assert.assertEquals("Wit", content.get(0));
-        Assert.assertEquals("", content.get(1));
     }
 
     String getResource(String path) {

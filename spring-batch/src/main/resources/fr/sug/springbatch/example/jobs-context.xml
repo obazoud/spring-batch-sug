@@ -158,7 +158,7 @@
             <value><![CDATA[
             INSERT INTO MashStep (decoctionAmt,description,displayInfuseAmt,displayStepTemp,endTemp,id,infuseAmount,infuseTemp,mashId,name,
             rampTime,stepTemp,stepTime,type,version,waterGrainRatio) VALUES (:decoctionAmt,:description,:displayInfuseAmt,:displayStepTemp,
-            :endTemp,:infuseAmount,:id,:infuseTemp,:mashId,:name,:rampTime,:stepTemp,:stepTime,:type,:version,:waterGrainRatio)
+            :endTemp,:id,:infuseAmount,:infuseTemp,:mashId,:name,:rampTime,:stepTemp,:stepTime,:type,:version,:waterGrainRatio)
             ]]></value>
         </property>
         <property name="waterSql">

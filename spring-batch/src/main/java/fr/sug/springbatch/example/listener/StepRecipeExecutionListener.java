@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.sug.springbatch.example.listener;
 
@@ -15,7 +15,7 @@ import fr.sug.springbatch.example.beans.Recipe;
 
 /**
  * @author bazoud
- * 
+ *
  */
 public class StepRecipeExecutionListener extends ItemListenerSupport<Recipe, Recipe> {
     // logger
@@ -25,7 +25,7 @@ public class StepRecipeExecutionListener extends ItemListenerSupport<Recipe, Rec
     @Override
     public void afterProcess(Recipe item, Recipe result) {
         if (result == null) {
-            LOG.warn("Filtering " + item.getName());
+            LOG.info("Filtering " + item.getName());
             try {
                 List<Recipe> excludes = new ArrayList<Recipe>();
                 excludes.add(item);
