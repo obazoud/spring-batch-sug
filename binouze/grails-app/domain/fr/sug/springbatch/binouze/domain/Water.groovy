@@ -27,6 +27,7 @@ class Water implements Serializable {
     String sodium
     String sulfate
     String version
+    static belongsTo = [ recipe : Recipe ]
 
     static constraints = {
         id(size: 1..36, blank: false)

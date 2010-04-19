@@ -11,7 +11,7 @@ class MashStep implements Serializable {
          table 'MashStep'
          // version is set to false, because this isn't available by default for legacy databases
          version false
-         id generator:'identity', column:'id'
+         id generator:'assigned', column:'id'
     }
     String id
     String mashid
@@ -29,6 +29,7 @@ class MashStep implements Serializable {
     String type
     String version
     String watergrainratio
+    static belongsTo = [ mash : Mash ]
 
     static constraints = {
         id(size: 1..36, blank: false)

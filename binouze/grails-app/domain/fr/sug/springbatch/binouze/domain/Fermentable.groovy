@@ -37,6 +37,7 @@ class Fermentable implements Serializable {
     String type
     String version
     String yield
+    static belongsTo = [ recipe : Recipe ]
 
     static constraints = {
         id(size: 1..36, blank: false)

@@ -13,19 +13,19 @@ hibernate {
 environments {
 	development {
 		dataSource {
-			dbCreate = "none" // one of 'create', 'create-drop','update'
+			dbCreate = "validate" // one of 'create', 'create-drop','update'
 			url = "jdbc:mysql://localhost/beer"
 		}
 	}
 	test {
 		dataSource {
-			dbCreate = "none" // one of 'create', 'create-drop','update'
+			dbCreate = "validate" // one of 'create', 'create-drop','update'
 			url = "jdbc:mysql://localhost/beer"
 		}
 	}
 	production {
 		dataSource {
-			dbCreate = "none" // one of 'create', 'create-drop','update'
+			dbCreate = "validate" // one of 'create', 'create-drop','update'
 			url = "jdbc:mysql://localhost/beer"
 		}
 	}

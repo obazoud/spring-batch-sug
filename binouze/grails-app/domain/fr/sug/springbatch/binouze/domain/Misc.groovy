@@ -28,6 +28,7 @@ class Misc implements Serializable {
     String use1
     String usefor
     String version
+    static belongsTo = [ recipe : Recipe ]
 
     static constraints = {
         id(size: 1..36, blank: false)

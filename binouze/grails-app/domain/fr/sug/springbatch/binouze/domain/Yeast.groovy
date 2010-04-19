@@ -37,6 +37,7 @@ class Yeast implements Serializable {
     String timescultured
     String type
     String version
+    static belongsTo = [ recipe : Recipe ]
 
     static constraints = {
         id(size: 1..36, blank: false)

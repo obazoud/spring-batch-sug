@@ -11,7 +11,7 @@ class Style implements Serializable {
          table 'Style'
          // version is set to false, because this isn't available by default for legacy databases
          version false
-         id generator:'identity', column:'id'
+         id generator:'assigned', column:'id'
     }
     String id
     String abvmax

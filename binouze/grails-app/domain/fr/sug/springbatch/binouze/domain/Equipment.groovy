@@ -11,7 +11,8 @@ class Equipment implements Serializable {
 		table 'Equipment'
 		// version is set to false, because this isn't available by default for legacy databases
 		version false
-		id generator:'identity', column:'id'
+        id generator:'assigned', column:'id'
+        recipe column:'id'
 	}
 	String id
 	String batchsize
@@ -38,7 +39,7 @@ class Equipment implements Serializable {
 	String tunvolume
 	String tunweight
 	String version
-	
+	Recipe recipe 
 	static constraints = {
 		id(size: 1..36, blank: false)
 		batchsize(size: 0..50)

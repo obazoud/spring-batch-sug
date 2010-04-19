@@ -35,7 +35,8 @@ class Hop implements Serializable {
     String type
     String use1
     String version
-
+    static belongsTo = [ recipe : Recipe ]
+                         
     static constraints = {
         id(size: 1..36, blank: false)
         recipeid(size: 1..36, blank: false)
