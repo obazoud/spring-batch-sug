@@ -1,3 +1,5 @@
+package  fr.sug.springbatch.binouze.domain;
+
 /**
  * The Fermentable entity.
  *

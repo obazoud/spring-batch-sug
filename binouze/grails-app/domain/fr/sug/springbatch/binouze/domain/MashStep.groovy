@@ -1,3 +1,4 @@
+package  fr.sug.springbatch.binouze.domain;
 /**
  * The Mashstep entity.
  *
@@ -5,7 +6,7 @@
  *
  *
  */
-class Mashstep implements Serializable {
+class MashStep implements Serializable {
     static mapping = {
          table 'MashStep'
          // version is set to false, because this isn't available by default for legacy databases

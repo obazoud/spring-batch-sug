@@ -1,3 +1,4 @@
+package  fr.sug.springbatch.binouze.domain;
 /**
  * The Water entity.
  *
