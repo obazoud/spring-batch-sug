@@ -76,7 +76,7 @@ CREATE TABLE Hop (
 	type VARCHAR(50),
 	use1 VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id, recipeId),
+	PRIMARY KEY (id),
 	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE Fermentable (
 	type VARCHAR(50),
 	version VARCHAR(50),
 	yield VARCHAR(50),
-	PRIMARY KEY (id, recipeId),
+	PRIMARY KEY (id),
 	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
@@ -124,7 +124,7 @@ CREATE TABLE Misc (
 	use1 VARCHAR(50),
 	useFor VARCHAR(50),
 	version VARCHAR(50),	
-	PRIMARY KEY (id, recipeId),
+	PRIMARY KEY (id),
 	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
@@ -153,7 +153,7 @@ CREATE TABLE Yeast (
 	timesCultured VARCHAR(50),
 	type VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id, recipeId),
+	PRIMARY KEY (id),
 	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
 
@@ -266,7 +266,7 @@ CREATE TABLE MashStep (
 	type VARCHAR(50),
 	version VARCHAR(50),
 	waterGrainRatio VARCHAR(50),
-	PRIMARY KEY (id, mashId),
+	PRIMARY KEY (id),
 	FOREIGN KEY (mashId) REFERENCES Mash(id)
 );
 
@@ -285,6 +285,6 @@ CREATE TABLE Water (
 	sodium VARCHAR(50),
 	sulfate VARCHAR(50),
 	version VARCHAR(50),
-	PRIMARY KEY (id, recipeId),
+	PRIMARY KEY (id),
 	FOREIGN KEY (recipeId) REFERENCES Recipe(id)
 );
