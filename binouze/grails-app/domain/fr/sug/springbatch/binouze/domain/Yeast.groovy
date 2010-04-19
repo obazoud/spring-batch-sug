@@ -12,6 +12,7 @@ class Yeast implements Serializable {
          // version is set to false, because this isn't available by default for legacy databases
          version false
          id generator:'identity', column:'id'
+         recipe column:'recipeId'
     }
     String id
     String recipeid

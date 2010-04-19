@@ -63,10 +63,8 @@ class Recipe implements Serializable {
 	String tertiarytmp
 	String type
 	String version
-	Style style
-	Mash mash
 	static hasMany = [ hops : Hop, fermentables : Fermentable, miscs : Misc, yeasts : Yeast, waters : Water ]
-    static hasOne = [equipment : Equipment]
+	static hasOne = [equipment : Equipment, style : Style, mash : Mash]
 	static constraints = {
 		id(size: 1..36, blank: false)
 		abv(size: 0..50)

@@ -12,6 +12,7 @@ class Style implements Serializable {
          // version is set to false, because this isn't available by default for legacy databases
          version false
          id generator:'assigned', column:'id'
+         recipe column:'id', insertable:false, updateable:false
     }
     String id
     String abvmax
@@ -49,7 +50,7 @@ class Style implements Serializable {
     String styleletter
     String type
     String version
-
+    Recipe recipe
     static constraints = {
         id(size: 1..36, blank: false)
         abvmax(size: 0..50)

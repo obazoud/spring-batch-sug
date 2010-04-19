@@ -12,6 +12,7 @@ class MashStep implements Serializable {
          // version is set to false, because this isn't available by default for legacy databases
          version false
          id generator:'assigned', column:'id'
+         mash column:'mashId'
     }
     String id
     String mashid

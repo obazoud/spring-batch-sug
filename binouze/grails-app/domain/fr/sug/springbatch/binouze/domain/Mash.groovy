@@ -12,6 +12,7 @@ class Mash implements Serializable {
 		// version is set to false, because this isn't available by default for legacy databases
 		version false
 		id generator:'assigned', column:'id'
+	    recipe column:'id', insertable:false, updateable:false
 	}
 	String id
 	String displaygraintemp
@@ -30,7 +31,7 @@ class Mash implements Serializable {
 	String type
 	String version
 	static hasMany = [ mashSteps : MashStep ]
-    static belongsTo = [ recipe : Recipe ]
+    Recipe recipe
 	
 	static constraints = {
 		id(size: 1..36, blank: false)
