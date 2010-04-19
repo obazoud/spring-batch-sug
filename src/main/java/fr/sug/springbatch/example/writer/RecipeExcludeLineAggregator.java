@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.sug.springbatch.example.writer;
 
@@ -17,7 +17,6 @@ public class RecipeExcludeLineAggregator implements LineAggregator<Recipe> {
     public String aggregate(Recipe item) {
         StringBuilder builder = new StringBuilder();
         builder.append(item.getName());
-        builder.append("\n");
         return builder.toString();
     }
 }
