@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 /**
  * Read beer recipes data from XML file and insert it into a database.
  * There are many defects within this code.
+ * FIXME rejeter Wit dans fichier de rejet
  */
 public class PlainOldBatch {
 
