@@ -1,13 +1,5 @@
 package fr.sug.springbatch.example;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -23,6 +15,13 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.sql.DataSource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -53,13 +52,19 @@ public class SpringContextTest {
     @Test
     @DirtiesContext
     public void testLaunchJob() throws Exception {
+
+        // Lauch our job:
+
         Map<String, JobParameter> parameters = new HashMap<String, JobParameter>();
         parameters.put("recipes", new JobParameter(getResource("recipes.xml")));
-
         JobExecution jobExecution = jobLauncherTestUtils.launchJob(new JobParameters(parameters));
 
-        // Assert stuff
+        // Batch should be completed:
+
         Assert.assertEquals(jobExecution.getExitStatus().getExitDescription(), BatchStatus.COMPLETED, jobExecution.getStatus());
+
+        // Our data should be present into our database:
+
         Assert.assertEquals(3, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Recipe"));
         Assert.assertEquals(6, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Hop"));
         Assert.assertEquals(11, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Fermentable"));
@@ -71,10 +76,13 @@ public class SpringContextTest {
         Assert.assertEquals(6, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from MashStep"));
         Assert.assertEquals(2, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Water"));
 
+        // TODO we could use DbUnit to better check data
         Map<String, String> argsRecipe = new HashMap<String, String>();
         argsRecipe.put("name", "Dry Stout");
         String recipeId = simpleJdbcTemplate.queryForObject("SELECT id FROM Recipe where name=:name", String.class, argsRecipe);
         Assert.assertNotNull(recipeId);
+
+        // Foreign keys should reference each other:
 
         argsRecipe.clear();
         argsRecipe.put("recipeId", recipeId);
@@ -90,8 +98,11 @@ public class SpringContextTest {
         argsRecipe.put("mashId", mashId);
         Assert.assertEquals(2, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from MashStep where mashId=:mashId", argsRecipe));
 
+        // Excludes file should exist:
         File excludes = new File("/tmp/sug/recipesexcludes.txt");
         Assert.assertTrue(excludes.exists());
+
+        // Excludes file should contain Wit:
         List<String> content = IOUtils.readLines(new FileInputStream(excludes));
         Assert.assertEquals(1, content.size());
         Assert.assertEquals("Wit", content.get(0));
