@@ -1,7 +1,6 @@
 package fr.sug.springbatch.example;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,19 +23,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * A simple test.
  *
  * @author bazoud
- *
  * @version $Id$
- *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:fr/sug/springbatch/example/batch-test-context.xml" })
+@ContextConfiguration(locations = {"classpath:fr/sug/springbatch/example/batch-test-context.xml"})
 public class SpringContextTest {
-    // logger
-    private static final Logger LOG = Logger.getLogger(SpringContextTest.class);
 
     private SimpleJdbcTemplate simpleJdbcTemplate;
 
@@ -66,6 +60,7 @@ public class SpringContextTest {
         // Our data should be present into our database:
 
         Assert.assertEquals(3, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Recipe"));
+        Assert.assertEquals("Burton Ale", simpleJdbcTemplate.queryForObject("SELECT name FROM Recipe LIMIT 1", String.class));
         Assert.assertEquals(6, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Hop"));
         Assert.assertEquals(11, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Fermentable"));
         Assert.assertEquals(6, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from Misc"));

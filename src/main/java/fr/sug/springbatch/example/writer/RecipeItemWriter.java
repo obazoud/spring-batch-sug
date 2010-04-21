@@ -1,10 +1,6 @@
 package fr.sug.springbatch.example.writer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
-
+import fr.sug.springbatch.example.beans.Recipe;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
@@ -13,21 +9,13 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcOperations;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import fr.sug.springbatch.example.beans.Equipment;
-import fr.sug.springbatch.example.beans.Fermentable;
-import fr.sug.springbatch.example.beans.Hop;
-import fr.sug.springbatch.example.beans.Mash;
-import fr.sug.springbatch.example.beans.MashStep;
-import fr.sug.springbatch.example.beans.Misc;
-import fr.sug.springbatch.example.beans.Recipe;
-import fr.sug.springbatch.example.beans.Style;
-import fr.sug.springbatch.example.beans.Water;
-import fr.sug.springbatch.example.beans.Yeast;
+import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * 
- * @author bazoud
- * 
+ * Write recipe list into database.
  */
 public class RecipeItemWriter implements ItemWriter<Recipe> {
     private SimpleJdbcOperations simpleJdbcTemplate;
@@ -42,77 +30,43 @@ public class RecipeItemWriter implements ItemWriter<Recipe> {
     private String mashStepSql;
     private String waterSql;
 
+    /**
+     * Write each item in the chunk.
+     *
+     * @param items items to write
+     * @throws Exception
+     */
     @Override
     public void write(List<? extends Recipe> items) throws Exception {
         for (Recipe recipe : items) {
-            // Recipe
-            SqlParameterSource argsRecipe = new BeanPropertyItemSqlParameterSourceProvider<Recipe>().createSqlParameterSource(recipe);
-            simpleJdbcTemplate.batchUpdate(recipeSql, new SqlParameterSource[] { argsRecipe });
 
-            // Hop
-            List<SqlParameterSource> argsHops = new ArrayList<SqlParameterSource>();
-            ItemSqlParameterSourceProvider<Hop> sqlParameterSourceHop = new BeanPropertyItemSqlParameterSourceProvider<Hop>();
-            for (Hop hop : recipe.getHops()) {
-                argsHops.add(sqlParameterSourceHop.createSqlParameterSource(hop));
-            }
-            simpleJdbcTemplate.batchUpdate(hopSql, argsHops.toArray(new SqlParameterSource[argsHops.size()]));
-
-            // Fermentable
-            List<SqlParameterSource> argsFermentables = new ArrayList<SqlParameterSource>();
-            ItemSqlParameterSourceProvider<Fermentable> sqlParameterSourceFermentable = new BeanPropertyItemSqlParameterSourceProvider<Fermentable>();
-            for (Fermentable fermentable : recipe.getFermentables()) {
-                argsFermentables.add(sqlParameterSourceFermentable.createSqlParameterSource(fermentable));
-            }
-            simpleJdbcTemplate.batchUpdate(fermentableSql, argsFermentables.toArray(new SqlParameterSource[argsFermentables.size()]));
-
-            // Misc
-            List<SqlParameterSource> argsMiscs = new ArrayList<SqlParameterSource>();
-            ItemSqlParameterSourceProvider<Misc> sqlParameterSourceMisc = new BeanPropertyItemSqlParameterSourceProvider<Misc>();
-            for (Misc misc : recipe.getMiscs()) {
-                argsMiscs.add(sqlParameterSourceMisc.createSqlParameterSource(misc));
-            }
-            simpleJdbcTemplate.batchUpdate(miscSql, argsMiscs.toArray(new SqlParameterSource[argsMiscs.size()]));
-
-            // Yeast
-            List<SqlParameterSource> argsYeasts = new ArrayList<SqlParameterSource>();
-            ItemSqlParameterSourceProvider<Yeast> sqlParameterSourceYeast = new BeanPropertyItemSqlParameterSourceProvider<Yeast>();
-            for (Yeast yeast : recipe.getYeasts()) {
-                argsYeasts.add(sqlParameterSourceYeast.createSqlParameterSource(yeast));
-            }
-            simpleJdbcTemplate.batchUpdate(yeastSql, argsYeasts.toArray(new SqlParameterSource[argsYeasts.size()]));
-
-            // Style
-            Style style = recipe.getStyle();
-            SqlParameterSource argsStyle = new BeanPropertyItemSqlParameterSourceProvider<Style>().createSqlParameterSource(style);
-            simpleJdbcTemplate.batchUpdate(styleSql, new SqlParameterSource[] { argsStyle });
-
-            // Equipment
-            Equipment equipment = recipe.getEquipment();
-            SqlParameterSource argsEquipment = new BeanPropertyItemSqlParameterSourceProvider<Equipment>()
-                    .createSqlParameterSource(equipment);
-            simpleJdbcTemplate.batchUpdate(equipmentSql, new SqlParameterSource[] { argsEquipment });
-
-            // Mash
-            Mash mash = recipe.getMash();
-            SqlParameterSource argsMash = new BeanPropertyItemSqlParameterSourceProvider<Mash>().createSqlParameterSource(mash);
-            simpleJdbcTemplate.batchUpdate(mashSql, new SqlParameterSource[] { argsMash });
-
-            // MashStep
-            List<SqlParameterSource> argsMashSteps = new ArrayList<SqlParameterSource>();
-            ItemSqlParameterSourceProvider<MashStep> sqlParameterSourceMashStep = new BeanPropertyItemSqlParameterSourceProvider<MashStep>();
-            for (MashStep mashStep : mash.getMashSteps()) {
-                argsMashSteps.add(sqlParameterSourceMashStep.createSqlParameterSource(mashStep));
-            }
-            simpleJdbcTemplate.batchUpdate(mashStepSql, argsMashSteps.toArray(new SqlParameterSource[argsMashSteps.size()]));
-
-            // Water
-            List<SqlParameterSource> argsWaters = new ArrayList<SqlParameterSource>();
-            ItemSqlParameterSourceProvider<Water> sqlParameterSourceWater = new BeanPropertyItemSqlParameterSourceProvider<Water>();
-            for (Water water : recipe.getWaters()) {
-                argsWaters.add(sqlParameterSourceWater.createSqlParameterSource(water));
-            }
-            simpleJdbcTemplate.batchUpdate(waterSql, argsWaters.toArray(new SqlParameterSource[argsWaters.size()]));
+            writeItem(recipe, recipeSql);
+            writeItemList(recipe.getHops(), hopSql);
+            writeItemList(recipe.getFermentables(), fermentableSql);
+            writeItemList(recipe.getMiscs(), miscSql);
+            writeItemList(recipe.getYeasts(), yeastSql);
+            writeItem(recipe.getStyle(), styleSql);
+            writeItem(recipe.getEquipment(), equipmentSql);
+            writeItem(recipe.getMash(), mashSql);
+            writeItemList(recipe.getMash().getMashSteps(), mashStepSql);
+            writeItemList(recipe.getWaters(), waterSql);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void writeItem(Object item, String sql) {
+        SqlParameterSource args = new BeanPropertyItemSqlParameterSourceProvider().createSqlParameterSource(item);
+        simpleJdbcTemplate.batchUpdate(sql, new SqlParameterSource[]{args});
+    }
+
+    @SuppressWarnings("unchecked")
+    private void writeItemList(Collection items, String sql) {
+        List<SqlParameterSource> args = new ArrayList<SqlParameterSource>();
+        ItemSqlParameterSourceProvider sqlParameterSource = new BeanPropertyItemSqlParameterSourceProvider();
+        for (Object item : items) {
+            args.add(sqlParameterSource.createSqlParameterSource(item));
+        }
+        simpleJdbcTemplate.batchUpdate(sql, args.toArray(new SqlParameterSource[args.size()]));
     }
 
     @Required
