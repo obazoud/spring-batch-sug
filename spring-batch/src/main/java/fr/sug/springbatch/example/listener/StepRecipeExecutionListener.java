@@ -3,15 +3,14 @@
  */
 package fr.sug.springbatch.example.listener;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.sug.springbatch.example.beans.Recipe;
 import org.apache.log4j.Logger;
 import org.springframework.batch.core.listener.ItemListenerSupport;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.beans.factory.annotation.Required;
 
-import fr.sug.springbatch.example.beans.Recipe;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author bazoud
@@ -31,7 +30,7 @@ public class StepRecipeExecutionListener extends ItemListenerSupport<Recipe, Rec
                 excludes.add(item);
                 recipeExcludeWriter.write(excludes);
             } catch (Exception e) {
-                LOG.warn("Can not write exludes file", e);
+                LOG.error("Can not write exludes file", e);
             }
         }
     }

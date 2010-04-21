@@ -8,6 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,7 +19,6 @@ import java.util.logging.Logger;
 /**
  * Read beer recipes data from XML file and insert it into a database.
  * There are many defects within this code.
- * FIXME rejeter Wit dans fichier de rejet
  */
 public class PlainOldBatch {
 
@@ -28,8 +29,9 @@ public class PlainOldBatch {
     public static void main(String[] args) throws JDOMException, IOException, SQLException {
         // Parse args:
         String inputFileName = args[0];
+        String rejectFileName = "data/sug-recipe-reject.txt";
 
-        new PlainOldBatch().run(inputFileName);
+        new PlainOldBatch().run(inputFileName,rejectFileName);
 
     }
 
@@ -45,12 +47,15 @@ public class PlainOldBatch {
      * Run that plain old batch.
      *
      * @param inputFileName file to read
+     * @param rejectFileName reject file
      * @throws JDOMException XML parsing problem
      * @throws IOException   IO problem
      * @throws SQLException  SQL problem
      */
     @SuppressWarnings("unchecked")
-    private void run(String inputFileName) throws JDOMException, IOException, SQLException {
+    private void run(String inputFileName, String rejectFileName) throws JDOMException, IOException, SQLException {
+
+        deleteRejectFile(rejectFileName);
 
         // Read XML file:
         LOG.info("Reading XML...");
@@ -63,6 +68,13 @@ public class PlainOldBatch {
         // Write recipes:
         LOG.info("Write receipes...");
         for (Element recipe : recipes) {
+
+            // Reject Wit:
+            if( "Wit".equalsIgnoreCase(val(recipe,"NAME")) ) {
+                reject(recipe,rejectFileName);
+            }
+
+            // Write recipe:
             String recipeId = insertRecipe(recipe);
 
             // Write hops for recipe:
@@ -79,6 +91,22 @@ public class PlainOldBatch {
         }
     }
 
+    private void deleteRejectFile(String rejectFileName) {
+        new File(rejectFileName).delete();
+    }
+
+    /**
+     * Write this recipe in reject file.
+     * @param recipe recipe to reject
+     * @param rejectFileName reject file name
+     */
+    private void reject(Element recipe,String rejectFileName) throws IOException {
+        FileWriter rejectFile = new FileWriter(rejectFileName,true);
+        rejectFile.append(val(recipe,"NAME"));
+        rejectFile.append("\n");
+        rejectFile.close();
+    }
+
     private String insertRecipe(Element recipe) {
         String id = generateUniqueID();
         String name = val(recipe, "NAME");
@@ -88,7 +116,7 @@ public class PlainOldBatch {
         String boilSize = val(recipe, "BOIL_SIZE");
         String boilTime = val(recipe, "BOIL_TIME");
         String efficiency = val(recipe, "EFFICIENCY");
-        jdbcTemplate.update("insert into RECIPE ( ID, NAME, VERSION, TYPE, BREWER, BOILSIZE, BOILTIME, EFFICIENCY ) " +
+        jdbcTemplate.update("insert into Recipe ( ID, NAME, VERSION, TYPE, BREWER, BOILSIZE, BOILTIME, EFFICIENCY ) " +
                 "values ( ?, ?, ?, ?, ?, ?, ?, ? )",
                 id, name, version, type, brewer, boilSize, boilTime, efficiency);
         return id;
@@ -103,7 +131,7 @@ public class PlainOldBatch {
         String amount = val(hop, "AMOUNT");
         String time = val(hop, "TIME");
         String type = val(hop, "TYPE");
-        jdbcTemplate.update("insert into HOP ( ID, RECIPEID, NAME, VERSION, ORIGIN, ALPHA, AMOUNT, TIME, TYPE ) " +
+        jdbcTemplate.update("insert into Hop ( ID, RECIPEID, NAME, VERSION, ORIGIN, ALPHA, AMOUNT, TIME, TYPE ) " +
                 "values ( ?, ?, ?, ?, ?, ?, ?, ?, ? )",
                 id, recipeId, name, version, origin, alpha, amount, time, type);
     }
@@ -117,7 +145,7 @@ public class PlainOldBatch {
         String yield = val(hop, "YIELD");
         String color = val(hop, "COLOR");
 
-        jdbcTemplate.update("insert into FERMENTABLE ( ID, RECIPEID, NAME, VERSION, TYPE, AMOUNT, YIELD, COLOR ) " +
+        jdbcTemplate.update("insert into Fermentable ( ID, RECIPEID, NAME, VERSION, TYPE, AMOUNT, YIELD, COLOR ) " +
                 "values ( ?, ?, ?, ?, ?, ?, ?, ? )",
                 id, recipeId, name, version, type, amount, yield, color);
     }
