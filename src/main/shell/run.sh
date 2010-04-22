@@ -26,7 +26,7 @@ case $TYPE in
         java $JAVA_OPTS -classpath $(echo ./lib/*.jar . | sed 's/ /:/g') \
             org.springframework.batch.core.launch.support.CommandLineJobRunner \
             fr/sug/springbatch/example/batch-context.xml jobExemple \
-            recipes=file:///tmp/recipes.xml \
+            recipes=file:///data/projects/fr-sug-spring-batch/dirtybatch/data/recipes.xml \
             time=$(date +%Y%m%d-%k%M%S)
         exit
     ;;
@@ -35,7 +35,7 @@ case $TYPE in
         java $JAVA_OPTS -classpath $(echo ./lib/*.jar . | sed 's/ /:/g') \
             org.springframework.batch.core.launch.support.CommandLineJobRunner \
             fr/sug/springbatch/example/batch-context.xml jobExemple \
-            recipes=file:///tmp/recipes-medium.xml \
+            recipes=file:///data/projects/fr-sug-spring-batch/dirtybatch/data/recipes-medium.xml \
             time=$(date +%Y%m%d-%k%M%S)
         exit
     ;;
@@ -44,7 +44,7 @@ case $TYPE in
         java $JAVA_OPTS -classpath $(echo ./lib/*.jar . | sed 's/ /:/g') \
             org.springframework.batch.core.launch.support.CommandLineJobRunner \
             fr/sug/springbatch/example/batch-context.xml jobExemple \
-            recipes=file:///tmp/recipes-big.xml \
+            recipes=file:///data/projects/fr-sug-spring-batch/dirtybatch/data/recipes-big.xml \
             time=$(date +%Y%m%d-%k%M%S)
         exit
     ;;
