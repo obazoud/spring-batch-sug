@@ -1,84 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:batch="http://www.springframework.org/schema/batch"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    <!-- $Id$ -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
 
-  <!-- parent -->
-  <batch:job id="jobBean" abstract="true">
-    <batch:listeners>
-      <batch:listener ref="jobListener"/>
-    </batch:listeners>
-  </batch:job>
-
-  <!-- Notre Job est composé de 2 steps. -->
-  <batch:job id="jobExemple" parent="jobBean">
-    <!-- Le premier step est un exemple de Tasklet. Il ne fait qu'afficher l'heure. -->
-    <batch:step id="initialStep">
-      <batch:tasklet ref="initialTasklet"/>
-      <batch:next on="*" to="recipeStep"/>
-    </batch:step>
-    <!-- Le second step est un exemple de Tasklet de type chunk.
- Il met en oeuvre un traitement par lots en branchant le reader, le processor et
- le writer ensemble. -->
-    <batch:step id="recipeStep">
-      <batch:tasklet>
-        <batch:chunk reader="recipesReader" writer="recipesWriter" processor="recipesProcessor"
-                     commit-interval="${job.commit.interval}">
-          <batch:streams>
-            <batch:stream ref="recipeExcludeWriter"/>
-          </batch:streams>
-        </batch:chunk>
+    <!-- parent -->
+    <batch:job id="jobBean" abstract="true">
         <batch:listeners>
-          <batch:listener ref="stepRecipeExecutionListener"/>
+            <batch:listener ref="jobListener" />
         </batch:listeners>
-      </batch:tasklet>
-    </batch:step>
-  </batch:job>
+    </batch:job>
 
-  <!-- Le reader a pour responsabilité de lire un élément. Ici : un objet recipe.
-Notre reader utilise une implémentation de lecture XML déjà fournie par Spring Batch. -->
-  <bean id="recipesReader" class="org.springframework.batch.item.xml.StaxEventItemReader" scope="step">
-    <property name="resource" value="#{jobParameters[recipes]}"/>
-    <property name="fragmentRootElementName" value="RECIPE"/>
-    <property name="unmarshaller" ref="recipeMarshaller"/>
-  </bean>
+    <!-- Notre Job est composé de 2 steps. -->
+    <batch:job id="jobExemple" parent="jobBean">
+        <!-- Le premier step est un exemple de Tasklet. Il ne fait qu'afficher l'heure. -->
+        <batch:step id="initialStep">
+            <batch:tasklet ref="initialTasklet" />
+            <batch:next on="*" to="recipeStep" />
+        </batch:step>
+        <!--
+            Le second step est un exemple de Tasklet de type chunk. 
+            Il met en oeuvre un traitement par lots en branchant le reader, le processor et le writer ensemble.
+        -->
+        <batch:step id="recipeStep">
+            <batch:tasklet>
+                <batch:chunk reader="recipesReader" writer="recipesWriter" processor="recipesProcessor" commit-interval="${job.commit.interval}">
+                    <batch:streams>
+                        <batch:stream ref="recipeExcludeWriter" />
+                    </batch:streams>
+                </batch:chunk>
+                <batch:listeners>
+                    <batch:listener ref="stepRecipeExecutionListener" />
+                </batch:listeners>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
 
-  <!-- Le processor a pour responsabilité de, potentiellement :
-- transformer un objet avant traitement
-- rejeter un objet ou non
-Notre processeur est un composite, c.a.d qu'il chaîne 2 implémentations de processor. -->
-  <bean id="recipesProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
-    <property name="delegates">
-      <list>
-        <bean class="fr.sug.springbatch.example.processor.IdProcessor"/>
-        <bean class="fr.sug.springbatch.example.processor.RecipeProcessor"/>
-      </list>
-    </property>
-  </bean>
+    <!--
+        Le reader a pour responsabilité de lire un élément. 
+        Ici : un objet recipe. Notre reader utilise une implémentation de lecture XML déjà fournie par Spring Batch.
+    -->
+    <bean id="recipesReader" class="org.springframework.batch.item.xml.StaxEventItemReader" scope="step">
+        <property name="resource" value="#{jobParameters[recipes]}" />
+        <property name="fragmentRootElementName" value="RECIPE" />
+        <property name="unmarshaller" ref="recipeMarshaller" />
+    </bean>
 
-  <!-- Le write a pour responsabilité d'écrire un lot (chunk) d'objets.
-Il s'agit ici d'une implémentation custom. de writer -->
-  <bean id="recipesWriter" class="fr.sug.springbatch.example.writer.RecipeItemWriter">
-    <property name="dataSource" ref="dataSource"/>
-    <property name="sqlQueries" ref="sqlQueries"/>
-  </bean>
+    <!--
+        Le processor a pour responsabilité de, potentiellement : 
+        - transformer un objet avant traitement 
+        - rejeter un objet ou non
+        Notre processeur est un composite, c.a.d qu'il chaîne 2 implémentations de processor.
+    -->
+    <bean id="recipesProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
+        <property name="delegates">
+            <list>
+                <bean class="fr.sug.springbatch.example.processor.IdProcessor" />
+                <bean class="fr.sug.springbatch.example.processor.RecipeProcessor" />
+            </list>
+        </property>
+    </bean>
 
-  <!-- Le step execution listener est à l'écoute des différents évènements survenant pendant le step,
-en l'occurence : les rejets.
-Ce listener est une implémentation custom. Il délègue à un writer l'écriture de l'objet rejeté. -->
-  <bean id="stepRecipeExecutionListener" class="fr.sug.springbatch.example.listener.StepRecipeExecutionListener">
-    <property name="recipeExcludeWriter" ref="recipeExcludeWriter"/>
-  </bean>
+    <!-- 
+        Le write a pour responsabilité d'écrire un lot (chunk) d'objets.
+        Il s'agit ici d'une implémentation custom. de writer
+    -->
+    <bean id="recipesWriter" class="fr.sug.springbatch.example.writer.RecipeItemWriter">
+        <property name="dataSource" ref="dataSource" />
+        <property name="sqlQueries" ref="sqlQueries" />
+    </bean>
 
-  <!-- Writer d'objets rejetés. Ré-utilise une implémentation fournie par Spring Batch
-pour écrire un objet dans un fichier texte. -->
-  <bean id="recipeExcludeWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
-    <property name="resource" value="file:///tmp/sug/recipesexcludes.txt"/>
-    <property name="lineAggregator">
-      <bean class="fr.sug.springbatch.example.writer.RecipeExcludeLineAggregator"/>
-    </property>
-  </bean>
+    <!--
+        Le step execution listener est à l'écoute des différents évènements survenant pendant le step
+        En l'occurence : les rejets.
+        Ce listener est une implémentation custom. Il délègue à un writer l'écriture de l'objet rejeté.
+    -->
+    <bean id="stepRecipeExecutionListener" class="fr.sug.springbatch.example.listener.StepRecipeExecutionListener">
+        <property name="recipeExcludeWriter" ref="recipeExcludeWriter" />
+    </bean>
+
+    <!-- 
+        Writer d'objets rejetés. 
+        Ré-utilise une implémentation fournie par Spring Batch pour écrire un objet dans un fichier texte. -->
+    <bean id="recipeExcludeWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+        <property name="resource" value="file:///tmp/sug/recipesexcludes.txt" />
+        <property name="lineAggregator">
+            <bean class="fr.sug.springbatch.example.writer.RecipeExcludeLineAggregator" />
+        </property>
+    </bean>
 
 </beans>
