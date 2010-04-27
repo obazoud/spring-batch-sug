@@ -23,7 +23,9 @@
         -->
         <batch:step id="recipeStep">
             <batch:tasklet>
-                <batch:chunk reader="recipesReader" writer="recipesWriter" processor="recipesProcessor" commit-interval="${job.commit.interval}">
+                <batch:chunk reader="recipesReader" writer="recipesWriter" 
+                             processor="recipesProcessor" 
+                             commit-interval="${job.commit.interval}">
                     <batch:streams>
                         <batch:stream ref="recipeExcludeWriter" />
                     </batch:streams>

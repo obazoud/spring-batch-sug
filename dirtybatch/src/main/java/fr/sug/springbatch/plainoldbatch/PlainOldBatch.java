@@ -17,8 +17,8 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
- * Read beer recipes data from XML file and insert it into a database.
- * There are many defects within this code.
+ * Read beer recipes data from XML file and insert it into a database...
+ * ... the plain old way ;-)
  */
 public class PlainOldBatch {
 
@@ -28,14 +28,21 @@ public class PlainOldBatch {
 
     public static void main(String[] args) throws JDOMException, IOException, SQLException {
         // Parse args:
-        String inputFileName = args[0];
-        String rejectFileName = "data/sug-recipe-reject.txt";
+    	if( args.length != 1 ) {
+    		usage();
+    	} else {
+            String inputFileName = args[0];
+            String rejectFileName = "data/sug-recipe-reject.txt";
 
-        new PlainOldBatch().run(inputFileName,rejectFileName);
-
+            new PlainOldBatch().run(inputFileName,rejectFileName);
+    	}
     }
 
-    /**
+    private static void usage() {
+		System.err.println("Please give me an input file name");
+	}
+
+	/**
      * Init Spring for batch.
      */
     private PlainOldBatch() {
@@ -56,6 +63,9 @@ public class PlainOldBatch {
     private void run(String inputFileName, String rejectFileName) throws JDOMException, IOException, SQLException {
 
         deleteRejectFile(rejectFileName);
+        
+        // Start timer:
+        long chrono = System.currentTimeMillis();
 
         // Read XML file:
         LOG.info("Reading XML...");
@@ -89,6 +99,10 @@ public class PlainOldBatch {
                 insertFermentable(fermentable, recipeId);
             }
         }
+        
+        long chrono2 = System.currentTimeMillis();
+        LOG.info(String.format("Done in %.02f seconds",(chrono2-chrono)/1000.0));
+
     }
 
     private void deleteRejectFile(String rejectFileName) {
