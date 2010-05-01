@@ -1,5 +1,13 @@
 package fr.sug.springbatch.example;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,13 +22,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.sql.DataSource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A simple test.
@@ -94,7 +95,7 @@ public class SpringContextTest {
         Assert.assertEquals(2, simpleJdbcTemplate.queryForInt("SELECT COUNT(*) from MashStep where mashId=:mashId", argsRecipe));
 
         // Excludes file should exist:
-        File excludes = new File("/tmp/sug/recipesexcludes.txt");
+        File excludes = new File("file:///tmp/sug/recipesexcludes.txt");
         Assert.assertTrue(excludes.exists());
 
         // Excludes file should contain Wit:

@@ -3,10 +3,10 @@
  */
 package fr.sug.springbatch.example.config;
 
-import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -25,6 +25,7 @@ public class InitialStepConfiguration {
     private JobRepository jobRepository;
     @Autowired
     private PlatformTransactionManager transactionManager;
+
     /**
      *
      */
@@ -32,7 +33,8 @@ public class InitialStepConfiguration {
     }
 
     @Bean
-    public Step getInitialStep() {
+    @Qualifier("initialStep")
+    public TaskletStep getInitialStep() {
         TaskletStep step = new TaskletStep();
         step.setTransactionManager(transactionManager);
         step.setJobRepository(jobRepository);

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepListener;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.item.SimpleStepFactoryBean;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
@@ -15,10 +16,12 @@ import org.springframework.batch.item.ItemStream;
 import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.batch.item.xml.StaxEventItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import fr.sug.springbatch.example.beans.Equipment;
 import fr.sug.springbatch.example.beans.Fermentable;
@@ -41,7 +44,6 @@ import fr.sug.springbatch.example.xstream.XStreamMarshallerFactoryBean;
  * @version $Id$
  */
 @Configuration
-// @ImportResource(value = { "classpath:fr/sug/springbatch/example/implementations-context.xml" })
 public class RecipeStepConfiguration {
     @Autowired
     private StepRecipeExecutionListener stepRecipeExecutionListener;
@@ -49,15 +51,22 @@ public class RecipeStepConfiguration {
     private ItemStream recipeExcludeWriter;
     @Autowired
     private RecipeItemWriter recipesWriter;
+    @Autowired
+    private JobRepository jobRepository;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @Value("${job.commit.interval}")
     private int commitInterval;
-    @Value("#{jobParameters[recipes]}")
+    @Value("${job.recipes}")
     private Resource resource;
 
     @Bean
+    @Qualifier("recipeStep")
     public Step getRecipeStep() throws Exception {
         SimpleStepFactoryBean<Recipe, Recipe> step = new SimpleStepFactoryBean<Recipe, Recipe>();
+        step.setTransactionManager(transactionManager);
+        step.setJobRepository(jobRepository);
         step.setItemReader(getRecipesReader());
         step.setItemProcessor(getRecipesProcessor());
         step.setItemWriter(recipesWriter);
@@ -75,7 +84,7 @@ public class RecipeStepConfiguration {
         delegates.add(new RecipeProcessor());
         composite.setDelegates(delegates);
         composite.afterPropertiesSet();
-        return null;
+        return composite;
     }
 
     private ItemReader<Recipe> getRecipesReader() throws Exception {

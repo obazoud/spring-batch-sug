@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.batch.item.ItemWriter;
@@ -28,14 +29,13 @@ public class RecipeItemWriter implements ItemWriter<Recipe> {
 
     /**
      * Write each item in the chunk.
-     *
+     * 
      * @param items items to write
      * @throws Exception
      */
     @Override
     public void write(List<? extends Recipe> items) throws Exception {
         for (Recipe recipe : items) {
-
             writeItem(recipe, "recipeSql");
             writeItemList(recipe.getHops(), "hopSql");
             writeItemList(recipe.getFermentables(), "fermentableSql");
@@ -53,7 +53,7 @@ public class RecipeItemWriter implements ItemWriter<Recipe> {
     private void writeItem(Object item, String sqlId) {
         SqlParameterSource args = new BeanPropertyItemSqlParameterSourceProvider().createSqlParameterSource(item);
         String sql = sqlQueries.get(sqlId);
-        simpleJdbcTemplate.batchUpdate(sql, new SqlParameterSource[]{args});
+        simpleJdbcTemplate.batchUpdate(sql, new SqlParameterSource[] { args });
     }
 
     @SuppressWarnings("unchecked")
@@ -67,12 +67,12 @@ public class RecipeItemWriter implements ItemWriter<Recipe> {
         simpleJdbcTemplate.batchUpdate(sql, args.toArray(new SqlParameterSource[args.size()]));
     }
 
-    @Autowired
+    @Resource(name="sqlQueries")
     public void setSqlQueries(Map<String, String> props) {
         this.sqlQueries = props;
     }
 
-   @Autowired
+    @Autowired
     public void setDataSource(DataSource dataSource) {
         this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
     }

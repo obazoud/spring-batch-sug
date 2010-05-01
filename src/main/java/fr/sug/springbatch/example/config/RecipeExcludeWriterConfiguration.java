@@ -3,7 +3,6 @@
  */
 package fr.sug.springbatch.example.config;
 
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +19,7 @@ import fr.sug.springbatch.example.writer.RecipeExcludeLineAggregator;
 public class RecipeExcludeWriterConfiguration {
 
     @Bean
-    public ItemWriter<Recipe> getRecipeExcludeWriter() throws Exception {
+    public FlatFileItemWriter<Recipe> getRecipeExcludeWriter() throws Exception {
         FlatFileItemWriter<Recipe> writer = new FlatFileItemWriter<Recipe>();
         writer.setResource(new FileSystemResource("file:///tmp/sug/recipesexcludes.txt"));
         writer.setLineAggregator(new RecipeExcludeLineAggregator());
