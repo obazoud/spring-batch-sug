@@ -16,21 +16,4 @@
     <context:component-scan base-package="fr.sug.springbatch.example" />
     <aop:aspectj-autoproxy />
 
-    <bean class="org.springframework.batch.test.JobLauncherTestUtils" />
-
-    <!--  Initialise the database before every test case -->
-    <bean id="dataSourceInitializer" class="org.springframework.batch.test.DataSourceInitializer">
-        <property name="dataSource" ref="dataSource" />
-        <property name="destroyScripts">
-            <list>
-                <value>classpath:org/springframework/batch/core/schema-drop-h2.sql</value>
-            </list>
-        </property>
-        <property name="initScripts">
-            <list>
-                <value>classpath:org/springframework/batch/core/schema-h2.sql</value>
-                <value>classpath:fr/sug/springbatch/example/schema-recipe.sql</value>
-            </list>
-        </property>
-    </bean>
 </beans>

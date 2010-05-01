@@ -18,6 +18,7 @@ public class XStreamMarshallerFactoryBean implements FactoryBean<XStreamMarshall
     List<Class<?>> classes;
     Pattern patternClass = Pattern.compile("[A-Z][a-z]*");
     Pattern patternProperty = Pattern.compile("[A-Z]");
+
     @Override
     public void afterPropertiesSet() throws Exception {
         marshaller = new XStreamMarshaller();
@@ -32,7 +33,7 @@ public class XStreamMarshallerFactoryBean implements FactoryBean<XStreamMarshall
                 }
             }
         }
-        
+
         // fix
         marshaller.getXStream().aliasField("USE", Hop.class, "use1");
         marshaller.getXStream().aliasField("USE", Misc.class, "use1");

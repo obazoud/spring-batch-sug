@@ -1,23 +1,27 @@
 package fr.sug.springbatch.example.writer;
 
-import fr.sug.springbatch.example.beans.Recipe;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
-import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcOperations;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcOperations;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.stereotype.Component;
+
+import fr.sug.springbatch.example.beans.Recipe;
+
 /**
  * Write recipe list into database.
  */
+@Component(value = "recipesWriter")
 public class RecipeItemWriter implements ItemWriter<Recipe> {
     private SimpleJdbcOperations simpleJdbcTemplate;
     private Map<String, String> sqlQueries;
@@ -63,12 +67,12 @@ public class RecipeItemWriter implements ItemWriter<Recipe> {
         simpleJdbcTemplate.batchUpdate(sql, args.toArray(new SqlParameterSource[args.size()]));
     }
 
-    @Required
+    @Autowired
     public void setSqlQueries(Map<String, String> props) {
         this.sqlQueries = props;
     }
 
-    @Required
+   @Autowired
     public void setDataSource(DataSource dataSource) {
         this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
     }

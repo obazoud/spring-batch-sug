@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.sug.springbatch.example.processor;
 
@@ -20,7 +20,7 @@ import fr.sug.springbatch.example.beans.Yeast;
 
 /**
  * @author bazoud
- * 
+ *
  */
 public class IdProcessor implements ItemProcessor<Recipe, Recipe> {
 
