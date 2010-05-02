@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import fr.sug.springbatch.example.listener.JobListener;
 
 /**
+ * Job Exemple Configuration.
+ * 
+ * Wire initial and recipe step.
  * 
  * @author bazoud
  * @version $Id$
@@ -21,19 +24,19 @@ import fr.sug.springbatch.example.listener.JobListener;
 public class JobExempleConfiguration {
     @Autowired
     private JobRepository jobRepository;
-   @Autowired
+    @Autowired
     private JobListener jobListener;
     @Autowired
     @Qualifier("initialStep")
     private Step initialStep;
     @Autowired
-    @Qualifier("recipeStep") 
+    @Qualifier("recipeStep")
     private Step recipeStep;
 
     @Bean
     public Job getJobExemple() throws Exception {
         SimpleJob job = new SimpleJob();
-        job.setJobRepository(jobRepository);        
+        job.setJobRepository(jobRepository);
         job.addStep(initialStep);
         job.addStep(recipeStep);
         job.setJobExecutionListeners(new JobExecutionListener[] { jobListener });

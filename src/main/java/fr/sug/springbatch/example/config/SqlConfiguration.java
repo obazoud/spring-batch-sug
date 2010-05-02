@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
+ * SQL Configuration.
+ * 
  * @author bazoud
  * @version $Id$
  */

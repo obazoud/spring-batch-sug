@@ -40,6 +40,11 @@ import fr.sug.springbatch.example.writer.RecipeItemWriter;
 import fr.sug.springbatch.example.xstream.XStreamMarshallerFactoryBean;
 
 /**
+ * 
+ * Recipe Step configuration.
+ * 
+ * Reader/Processor/Writer configuration.
+ * 
  * @author bazoud
  * @version $Id$
  */

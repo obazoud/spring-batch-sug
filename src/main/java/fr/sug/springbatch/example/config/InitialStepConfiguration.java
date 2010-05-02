@@ -14,6 +14,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import fr.sug.springbatch.example.tasklet.InitialTasklet;
 
 /**
+ * Intial step configuration.
+ * 
  * @author bazoud
  * @version $Id$
  */
@@ -25,12 +27,6 @@ public class InitialStepConfiguration {
     private JobRepository jobRepository;
     @Autowired
     private PlatformTransactionManager transactionManager;
-
-    /**
-     *
-     */
-    public InitialStepConfiguration() {
-    }
 
     @Bean
     @Qualifier("initialStep")

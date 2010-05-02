@@ -12,6 +12,8 @@ import fr.sug.springbatch.example.beans.Recipe;
 import fr.sug.springbatch.example.writer.RecipeExcludeLineAggregator;
 
 /**
+ * Recipe exclude writer configuration.
+ * 
  * @author bazoud
  * @version $Id$
  */
