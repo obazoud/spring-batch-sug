@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+
+  <job id="jobExemple" xmlns="http://www.springframework.org/schema/batch">
+    <step id="stepA" next="stepB">
+    </step>
+    <step id="stepB">
+      (...)
+    </step>
+  </job>
+
+
+  <job id="jobExemple" xmlns="http://www.springframework.org/schema/batch">
+    <step id="stepA">
+      (...)          
+      <next on="*" to="stepB" />
+    </step>
+    <step id="stepB">
+      (...)
+    </step>
+  </job>
+
+
+  <job id="jobExemple" xmlns="http://www.springframework.org/schema/batch">
+    <step id="stepA">
+      (...)          
+      <next on="*" to="stepB" />
+      <next on="FAILED" to="stepAlert" />
+    </step>
+    <step id="stepB">
+      (...)
+    </step>
+    <step id="stepAlert">
+      (...)
+    </step>
+  </job>
+
+
+  <job id="jobExemple" xmlns="http://www.springframework.org/schema/batch">
+    <step id="stepA">
+      <tasklet>
+        <chunk>
+          (...)
+        </chunk>
+        <listeners>
+          <listener ref="skipCheckingListener" />
+        </listeners>
+      </tasklet>      
+      <next on="*" to="stepB" />
+      <next on="COMPLETED WITH SKIPS" to="stepC" />
+    </step>
+    <step id="stepB">
+      (...)
+    </step>
+    <step id="stepC">
+      (...)
+    </step>
+  </job>
+
+
+  <job id="jobExemple" xmlns="http://www.springframework.org/schema/batch">
+    <step id="stepA" next="skipCheckingDecision">
+      (...)
+    </step>
+    <decision id="skipCheckingDecision" decider="skipCheckingDecider">  
+      <next on="*" to="stepB" />
+      <next on="COMPLETED WITH SKIPS" to="stepC" />
+    </decision>
+    <step id="stepB">
+      (...)
+    </step>
+    <step id="stepC">
+      (...)
+    </step>
+  </job>
+
+
+  <job id="jobExemple" xmlns="http://www.springframework.org/schema/batch">
+    <step id="stepA">
+      <tasklet>
+        <chunk reader="myReader" writer="myWriter" />
+      </tasklet>
+      <listeners>
+        <!-- Promotion dans le JobExecutionContext -->
+        <listener ref="promotionListener" />
+      </listeners>
+      (...)
+    </step>
+  </job>
+
+  <bean id="promotionListener" class="org.springframework.batch.core.listener.ExecutionContextPromotionListener">
+    <property name="keys" value="myKey"/>
+  </bean>
+
+
+  <flow id="myFlow">
+    <step id="stepA" next="stepB">
+      (...)
+    </step>
+    <step id="stepB" next="stepC">
+      (...)
+    </step>
+    <step id="stepC">
+      (...)
+    </step>
+  </job>
+
+  <job id="jobExemple">
+    <flow parent="myFlow" id="mySteps" next="stepD" />
+    <step id="stepC">
+      (...)
+    </step>
+  </job>
+
+</beans>
+
