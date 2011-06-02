@@ -110,10 +110,48 @@
 
   <job id="jobExemple">
     <flow parent="myFlow" id="mySteps" next="stepD" />
+    <step id="stepD">
+      (...)
+    </step>
+  </job>
+
+
+  <job id="jobExemple1">
+    <step id="stepA" next="stepB">
+      (...)
+    </step>
+    <step id="stepB" next="stepC">
+      (...)
+    </step>
     <step id="stepC">
       (...)
     </step>
   </job>
+
+  <job id="jobExemple2">
+    <step id="stepX">
+      <job ref="jobExemple1" />
+    </step>
+  </job>
+
+
+  <job id="jobExemple" xmlns="http://www.springframework.org/schema/batch">
+    <step id="stepA" next="skipCheckingDecision">
+      (...)
+    </step>
+    <decision id="skipCheckingDecision" decider="skipCheckingDecider">  
+      <end on="xxx" />
+      <next on="COMPLETED WITH SKIPS" to="stepC" />
+      <fail on="*" />
+    </decision>
+    <step id="stepB">
+      (...)
+    </step>
+    <step id="stepC">
+      (...)
+    </step>
+  </job>
+
 
 </beans>
 
