@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        ">
+
+  <!-- Re-use spring config -->
+  <import resource="classpath:fr/sug/springbatch/example/batch-context.xml"/>
+
+  <!-- Add a scheduler for our simple job -->
+  <task:scheduled-tasks>
+    <task:scheduled ref="scheduledBatch" method="launch" cron="0/10 * * * * *"/>
+  </task:scheduled-tasks>
+
+  <bean id="scheduledBatch" class="fr.sug.springbatch.example.scheduled.ScheduledBatch">
+    <property name="recipesFile" value="${recipes}"/>
+    <property name="springBatchLauncher" ref="jobLauncher"/>
+    <property name="jobExemple" ref="jobExemple"/>
+  </bean>
+
+</beans>
