@@ -53,11 +53,6 @@
         <version>${springframework.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.springframework.batch</groupId>
-        <artifactId>spring-batch-admin-manager</artifactId>
-        <version>1.2.0.BUILD-SNAPSHOT</version>
-      </dependency>
-      <dependency>
         <groupId>org.springframework.ws</groupId>
         <artifactId>spring-ws</artifactId>
         <classifier>all</classifier>
@@ -84,10 +79,6 @@
     <dependency>
       <groupId>org.springframework.batch</groupId>
       <artifactId>spring-batch-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.batch</groupId>
-      <artifactId>spring-batch-admin-manager</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.ws</groupId>
