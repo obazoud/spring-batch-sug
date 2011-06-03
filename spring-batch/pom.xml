@@ -53,6 +53,11 @@
         <version>${springframework.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework.batch</groupId>
+        <artifactId>spring-batch-admin-manager</artifactId>
+        <version>1.2.0.BUILD-SNAPSHOT</version>
+      </dependency>
+      <dependency>
         <groupId>org.springframework.ws</groupId>
         <artifactId>spring-ws</artifactId>
         <classifier>all</classifier>
@@ -79,6 +84,10 @@
     <dependency>
       <groupId>org.springframework.batch</groupId>
       <artifactId>spring-batch-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-admin-manager</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.ws</groupId>
@@ -180,6 +189,13 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>spring-snapshots</id>
+      <name>Spring Maven Snapshot Repository</name>
+      <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
+    </repository>
+  </repositories>
   <properties>
     <springbatch.version>2.1.0.RELEASE</springbatch.version>
     <springframework.version>3.0.2.RELEASE</springframework.version>
@@ -188,4 +204,5 @@
     <h2.version>1.2.132</h2.version>
     <aspectjweaver.version>1.6.0</aspectjweaver.version>
   </properties>
+
 </project>
