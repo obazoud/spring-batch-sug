@@ -8,7 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class SchedulerMain {
     public static void main(String args[]) {
-        new ClassPathXmlApplicationContext("/fr/sug/springbatch/example/scheduling-context.xml");
+        new ClassPathXmlApplicationContext(
+                "/fr/sug/springbatch/example/scheduling-context.xml");
         // Spring Scheduler will start as soon as the Application Context is loaded.
     }
 }

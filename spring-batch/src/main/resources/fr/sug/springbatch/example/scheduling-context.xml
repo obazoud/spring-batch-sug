@@ -14,6 +14,7 @@
     <task:scheduled ref="scheduledBatch" method="launch" cron="0/10 * * * * *"/>
   </task:scheduled-tasks>
 
+  <!-- Launch our job -->
   <bean id="scheduledBatch" class="fr.sug.springbatch.example.scheduled.ScheduledBatch">
     <property name="recipesFile" value="${recipes}"/>
     <property name="springBatchLauncher" ref="jobLauncher"/>
