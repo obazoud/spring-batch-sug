@@ -1,0 +1,5 @@
+R;Burton Ale;All Grain;Brad Smith
+END
+R;Dry Stout;All Grain;Brad Smith
+H;Fuggles;United Kingdom
+END

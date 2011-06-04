@@ -20,7 +20,7 @@
   <aop:aspectj-autoproxy/>
 
   <bean class="org.springframework.batch.test.JobLauncherTestUtils">
-    <property name="job" ref="jobExemple"/>
+    <property name="job" ref="jobMasterDetail"/>
   </bean>
 
   <!--  Initialise the database before every test case -->
@@ -29,6 +29,7 @@
     <property name="destroyScripts">
       <list>
         <value>classpath:org/springframework/batch/core/schema-drop-h2.sql</value>
+        <value>classpath:fr/sug/springbatch/example/schema-drop-recipe.sql</value>
       </list>
     </property>
     <property name="initScripts">

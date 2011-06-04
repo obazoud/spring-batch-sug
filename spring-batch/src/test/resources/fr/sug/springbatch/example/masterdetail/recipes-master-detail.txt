@@ -1,0 +1,8 @@
+R;Burton Ale;All Grain;Brad Smith
+H;Goldings, East Kent;United Kingdom
+H;Northern Brewer;Germany
+H;Fuggles;United Kingdom
+END
+R;Dry Stout;All Grain;Brad Smith
+H;Fuggles;United Kingdom
+END
