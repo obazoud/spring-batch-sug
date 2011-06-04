@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <step id="stepA">
+    <tasklet>
+      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" skip-limit="10">
+        <skippable-exception-classes>
+          <include class="org.springframework.batch.item.file.FlatFileParseException"/>
+        </skippable-exception-classes>
+      </chunk>
+    </tasklet>
+  </step>
+
+  <step id="stepA">
+    <tasklet>
+      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" skip-limit="10" skip-policy="mySkipPolicy">
+        <skippable-exception-classes>
+          <include class="org.springframework.batch.item.file.FlatFileParseException"/>
+        </skippable-exception-classes>
+      </chunk>
+    </tasklet>
+  </step>
+
+
+  <step id="stepA">
+    <tasklet>
+      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" retry-limit="3">
+        <retryable-exception-classes>
+          <include class="org.springframework.dao.DeadlockLoserDataAccessException"/>
+        </retryable-exception-classes>
+      </chunk>
+    </tasklet>
+  </step>
+
+
+  <step id="stepA">
+    <tasklet>
+      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" retry-limit="3" retry-policy="myRetyPolicy">
+        <retryable-exception-classes>
+          <include class="org.springframework.dao.DeadlockLoserDataAccessException"/>
+        </retryable-exception-classes>
+      </chunk>
+    </tasklet>
+  </step>
+  
+  
+  <job restartable="true|false">
+    (...)
+  </job>
+
+
+  <job restartable="true">
+    <step id="stepA">
+      <tasklet allow-start-if-complete="true">
+        (...)
+      </tasklet>
+    </step>
+  </job>
+  
+  
+  <job restartable="true">
+    <step id="stepA">
+      <tasklet start-limit="3">
+        (...)
+      </tasklet>
+    </step>
+  </job>
+  
+    
+
