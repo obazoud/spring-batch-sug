@@ -2,7 +2,8 @@
 
   <step id="stepA">
     <tasklet>
-      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" skip-limit="10">
+      <chunk reader="itemReader" writer="itemWriter" 
+            commit-interval="100" skip-limit="10">
         <skippable-exception-classes>
           <include class="org.springframework.batch.item.file.FlatFileParseException"/>
         </skippable-exception-classes>
@@ -12,7 +13,8 @@
 
   <step id="stepA">
     <tasklet>
-      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" skip-limit="10" skip-policy="mySkipPolicy">
+      <chunk reader="itemReader" writer="itemWriter" 
+            commit-interval="100" skip-limit="10" skip-policy="mySkipPolicy">
         <skippable-exception-classes>
           <include class="org.springframework.batch.item.file.FlatFileParseException"/>
         </skippable-exception-classes>
@@ -23,7 +25,8 @@
 
   <step id="stepA">
     <tasklet>
-      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" retry-limit="3">
+      <chunk reader="itemReader" writer="itemWriter" 
+            commit-interval="100" retry-limit="3">
         <retryable-exception-classes>
           <include class="org.springframework.dao.DeadlockLoserDataAccessException"/>
         </retryable-exception-classes>
@@ -34,7 +37,8 @@
 
   <step id="stepA">
     <tasklet>
-      <chunk reader="itemReader" writer="itemWriter" commit-interval="100" retry-limit="3" retry-policy="myRetyPolicy">
+      <chunk reader="itemReader" writer="itemWriter" 
+            commit-interval="100" retry-limit="3" retry-policy="myRetryPolicy">
         <retryable-exception-classes>
           <include class="org.springframework.dao.DeadlockLoserDataAccessException"/>
         </retryable-exception-classes>

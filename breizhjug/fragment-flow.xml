@@ -91,7 +91,8 @@
     </step>
   </job>
 
-  <bean id="promotionListener" class="org.springframework.batch.core.listener.ExecutionContextPromotionListener">
+  <bean id="promotionListener" 
+        class="org.springframework.batch.core.listener.ExecutionContextPromotionListener">
     <property name="keys" value="myKey"/>
   </bean>
 
