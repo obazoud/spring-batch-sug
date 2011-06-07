@@ -111,13 +111,17 @@ mais qui ne sont pas déjà déclarés dans le chunk. -->
   <!-- Reader custom qui donne des objets Recipe. Pour cela, il a besoin de lire plusieurs lignes du fichier texte
        (une ligne maître et N lignes détail). La lecture de ces lignes sont déléguées à un ItemReader déjà implémenté
        dans Spring Batch. -->
-  <bean id="masterDetailRecipeReader" class="fr.sug.springbatch.example.masterdetail.MasterDetailReader" scope="step">
+  <bean id="masterDetailRecipeReader"
+        class="fr.sug.springbatch.example.masterdetail.MasterDetailReader"
+        scope="step">
     <property name="delegate" ref="masterDetailTextReader"/>
   </bean>
 
   <!-- Notre fichier maître détail est un fichier texte à champs séparés par des point-virgule. Pour le lire, on
        utilise l'implémentation déjà fournie par Spring Batch pour lire des fichiers plats. -->
-  <bean id="masterDetailTextReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+  <bean id="masterDetailTextReader"
+        class="org.springframework.batch.item.file.FlatFileItemReader"
+        scope="step">
     <!-- Chemin d'accès du fichier : -->
     <property name="resource" value="#{jobParameters[recipes]}"/>
 
@@ -138,7 +142,8 @@ mais qui ne sont pas déjà déclarés dans le chunk. -->
     </property>
   </bean>
   <!-- Cet objet divise la ligne en champs, les champs étant séparés par le caractère ';' -->
-  <bean id="csvTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+  <bean id="csvTokenizer"
+        class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
     <property name="delimiter" value=";"/>
   </bean>
 </beans>
