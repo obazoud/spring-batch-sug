@@ -1,5 +1,10 @@
 package fr.sug.springbatch.example.masterdetail;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,21 +15,16 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:fr/sug/springbatch/example/masterdetail/batch-test-context.xml"})
-@Transactional
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class})
@@ -41,6 +41,7 @@ public class MasterDetailTest {
     }
 
     @Test
+    @DirtiesContext
     public void simpleFile() throws Exception {
 
         // Lauch our job:
@@ -64,6 +65,7 @@ public class MasterDetailTest {
     }
 
     @Test
+    @DirtiesContext
     public void recipeWithoutHop() throws Exception {
 
         // Lauch our job:
@@ -87,6 +89,7 @@ public class MasterDetailTest {
     }
 
     @Test
+    @DirtiesContext
     public void emptyFile() throws Exception {
 
         // Lauch our job:
