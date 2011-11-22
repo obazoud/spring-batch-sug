@@ -1,7 +1,9 @@
 package fr.sug.springbatch.example.xstream;
 
 import java.beans.PropertyDescriptor;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,9 +23,9 @@ public class XStreamMarshallerFactoryBean implements FactoryBean<XStreamMarshall
     @Override
     public void afterPropertiesSet() throws Exception {
         marshaller = new XStreamMarshaller();
-
+        Map<String, Class<?>> aliases = new HashMap<String, Class<?>>();
         for (Class<?> clazz : classes) {
-            marshaller.addAlias(transformClass(clazz.getSimpleName()).toUpperCase(), clazz);
+            aliases.put(transformClass(clazz.getSimpleName()).toUpperCase(), clazz);
             PropertyDescriptor[] properties = PropertyUtils.getPropertyDescriptors(clazz);
             for (int i = 0; i < properties.length; i++) {
                 PropertyDescriptor property = properties[i];
@@ -32,6 +34,7 @@ public class XStreamMarshallerFactoryBean implements FactoryBean<XStreamMarshall
                 }
             }
         }
+        marshaller.setAliases(aliases);
         
         // fix
         marshaller.getXStream().aliasField("USE", Hop.class, "use1");
