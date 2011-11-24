@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+      http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+  <import resource="classpath:fr/sug/springbatch/example/implementations-context.xml"/>
+
+  <!-- Le processor a pour responsabilité de, potentiellement :
+       - transformer un objet avant traitement
+       - rejeter un objet ou non
+       Notre processeur est un composite, c.a.d qu'il chaîne 2 implémentations de processor.
+  -->
+  <bean id="recipesProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
+    <property name="delegates">
+      <list>
+        <bean class="fr.sug.springbatch.example.processor.IdProcessor"/>
+        <bean class="fr.sug.springbatch.example.processor.RecipeProcessor"/>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Le write a pour responsabilité d'écrire un lot (chunk) d'objets.
+       Il s'agit ici d'une implémentation custom. de writer
+  -->
+  <bean id="recipesWriter" class="fr.sug.springbatch.example.writer.RecipeItemWriter">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="sqlQueries" ref="sqlQueries"/>
+  </bean>
+
+</beans>

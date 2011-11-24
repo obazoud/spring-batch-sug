@@ -6,14 +6,10 @@
     <bean id="slaveChunkHandler" class="org.springframework.batch.integration.chunk.ChunkProcessorChunkHandler">
         <property name="chunkProcessor">
             <bean class="org.springframework.batch.core.step.item.SimpleChunkProcessor">
-                <property name="itemWriter" ref="productWriter" />
-                <property name="itemProcessor">
-                    <bean class="org.springframework.batch.item.support.PassThroughItemProcessor" />
-                </property>
+                <property name="itemWriter" ref="recipesWriter" />
+                <property name="itemProcessor" ref="recipesProcessor" />
             </bean>
         </property>
     </bean>
-
-    <bean id="productWriter" class="ProductItemWriter" />
 
 </beans>

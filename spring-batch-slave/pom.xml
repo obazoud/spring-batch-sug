@@ -16,5 +16,13 @@
       <artifactId>spring-batch-exemple</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-integration</artifactId>
+    </dependency>
   </dependencies>
 </project>

@@ -39,6 +39,11 @@
         <version>${springbatchadmin.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework.batch</groupId>
+        <artifactId>spring-batch-integration</artifactId>
+        <version>${springbatchadmin.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-aop</artifactId>
         <version>${springframework.version}</version>

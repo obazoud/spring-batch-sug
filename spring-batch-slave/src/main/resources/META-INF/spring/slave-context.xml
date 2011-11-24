@@ -7,6 +7,20 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<context:property-placeholder location="classpath*:META-INF/spring/*.properties" />
+  <import resource="classpath:fr/sug/springbatch/example/jobs-context-receipes.xml"/>
+  <context:property-placeholder location="classpath*:META-INF/*.properties" />
 
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${dataSource.driverClassName}" />
+    <property name="url" value="${dataSource.url}" />
+    <property name="username" value="${dataSource.username}" />
+    <property name="password" value="${dataSource.password}" />
+    <property name="initialSize" value="${dataSource.initialSize}" />
+    <property name="maxIdle" value="${dataSource.maxIdle}" />
+    <property name="maxWait" value="${dataSource.maxWait}" />
+    <property name="maxActive" value="${dataSource.maxActive}" />
+    <property name="minEvictableIdleTimeMillis" value="${dataSource.minEvictableIdleTimeMillis}" />
+    <property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}" />
+    
+  </bean>
 </beans>
