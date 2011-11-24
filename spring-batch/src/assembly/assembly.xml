@@ -1,5 +1,6 @@
 <!-- $Id: assembly.xml 49737 2010-04-14 12:10:23Z esnault $ -->
 <assembly>
+    <id>assembly</id> 
     <formats>
        <format>dir</format>
     </formats>
