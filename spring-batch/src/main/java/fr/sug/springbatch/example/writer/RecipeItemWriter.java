@@ -1,6 +1,13 @@
 package fr.sug.springbatch.example.writer;
 
-import fr.sug.springbatch.example.beans.Recipe;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.apache.log4j.Logger;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
@@ -9,16 +16,13 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcOperations;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import fr.sug.springbatch.example.beans.Recipe;
 
 /**
  * Write recipe list into database.
  */
 public class RecipeItemWriter implements ItemWriter<Recipe> {
+    private static final Logger LOG = Logger.getLogger(RecipeItemWriter.class);
     private SimpleJdbcOperations simpleJdbcTemplate;
     private Map<String, String> sqlQueries;
 
@@ -31,7 +35,7 @@ public class RecipeItemWriter implements ItemWriter<Recipe> {
     @Override
     public void write(List<? extends Recipe> items) throws Exception {
         for (Recipe recipe : items) {
-
+            LOG.debug("writing recipe: " + recipe.getName());
             writeItem(recipe, "recipeSql");
             writeItemList(recipe.getHops(), "hopSql");
             writeItemList(recipe.getFermentables(), "fermentableSql");

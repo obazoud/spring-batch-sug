@@ -1,16 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:file="http://www.springframework.org/schema/integration/file"
-	xmlns:integration="http://www.springframework.org/schema/integration" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:integration="http://www.springframework.org/schema/integration" xmlns:integration-jms="http://www.springframework.org/schema/integration/jms"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jms="http://www.springframework.org/schema/jms"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-1.0.xsd
-		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-1.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+        http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
     <import resource="classpath:fr/sug/springbatch/example/jobs-context.xml"/>
+
+    <bean id="chunkHandler" class="org.springframework.batch.integration.chunk.RemoteChunkHandlerFactoryBean">
+        <property name="chunkWriter" ref="chunkWriter" />
+        <property name="step" ref="recipeStep" />
+    </bean>
+
+    <bean id="chunkWriter" class="org.springframework.batch.integration.chunk.ChunkMessageChannelItemWriter" scope="step">
+        <property name="messagingOperations" ref="messagingGateway" />
+        <property name="replyChannel" ref="replies" />
+        <property name="maxWaitTimeouts" value="60" />
+    </bean>
+
+    <bean id="messagingGateway" class="org.springframework.integration.core.MessagingTemplate">
+        <property name="defaultChannel" ref="requests" />
+        <property name="receiveTimeout" value="1000" />
+    </bean>
+
+    <integration:channel id="requests" />
+    <integration:channel id="incoming" />
+
+    <integration-jms:outbound-channel-adapter connection-factory="connectionFactory" channel="requests" destination-name="requests" />
+
+    <integration:channel id="replies">
+        <integration:queue />
+        <integration:interceptors>
+            <bean id="pollerInterceptor" class="org.springframework.batch.integration.chunk.MessageSourcePollerInterceptor">
+                <property name="messageSource">
+                    <bean class="org.springframework.integration.jms.JmsDestinationPollingSource">
+                        <constructor-arg>
+                            <bean class="org.springframework.jms.core.JmsTemplate">
+                                <property name="connectionFactory" ref="connectionFactory" />
+                                <property name="defaultDestinationName" value="replies" />
+                                <property name="receiveTimeout" value="1000" />
+                            </bean>
+                        </constructor-arg>
+                    </bean>
+                </property>
+                <property name="channel" ref="incoming" />
+            </bean>
+        </integration:interceptors>
+    </integration:channel>
+    
+    <integration:transformer input-channel="incoming" output-channel="replies" ref="headerExtractor" method="extract" />
+        
+    <bean id="headerExtractor" class="org.springframework.batch.integration.chunk.JmsRedeliveredExtractor" />
+    
+    <!-- Master JMS listener -->
+    <jms:listener-container connection-factory="connectionFactory" transaction-manager="transactionManager" acknowledge="transacted" concurrency="1">
+        <jms:listener destination="requests" response-destination="replies" ref="chunkHandler" method="handleChunk" />
+    </jms:listener-container>
 
 </beans>
