@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx--3.1.xsd
         http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.5.0.xsd">
 
-    <amq:broker useJmx="false" persistent="false">
+    <amq:broker useJmx="false" persistent="false" destroyApplicationContextOnStop="true" destroyApplicationContextOnShutdown="true">
         <amq:transportConnectors>
             <amq:transportConnector uri="${activemq.connection.client.url}" />
         </amq:transportConnectors>
