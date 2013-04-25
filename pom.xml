@@ -10,6 +10,9 @@
   <description>SUG Spring batch parent.</description>
   <version>1.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <prerequisites>
+    <maven>3.0</maven>
+  </prerequisites>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -180,35 +183,35 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.6.4</version>
+        <version>1.7.5</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
-        <version>1.6.4</version>
+        <version>1.7.5</version>
         <scope>runtime</scope>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
-        <version>1.6.4</version>
+        <version>1.7.5</version>
         <scope>runtime</scope>
       </dependency>
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>1.2.16</version>
+        <version>1.2.17</version>
       </dependency>
       <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
-        <version>5.1.18</version>
+        <version>5.1.24</version>
         <scope>runtime</scope>
       </dependency>
       <dependency>
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
-        <version>1.3.161</version>
+        <version>1.3.171</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -305,7 +308,7 @@
   <properties>
     <springbatch.version>2.1.8.RELEASE</springbatch.version>
     <springbatchadmin.version>1.2.1.RELEASE</springbatchadmin.version>
-    <springframework.version>3.1.0.M2</springframework.version>
-    <springintegration.version>2.0.3.RELEASE</springintegration.version>
+    <springframework.version>3.1.4.RELEASE</springframework.version>
+    <springintegration.version>2.0.6.RELEASE</springintegration.version>
   </properties>
 </project>

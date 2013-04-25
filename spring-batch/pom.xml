@@ -83,15 +83,4 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>spring-snapshots</id>
-      <name>Spring Maven Snapshot Repository</name>
-      <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
-    </repository>
-  </repositories>
-  <properties>
-    <springbatch.version>2.1.8.RELEASE</springbatch.version>
-    <springframework.version>3.0.6.RELEASE</springframework.version>
-  </properties>
 </project>
