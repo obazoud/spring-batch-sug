@@ -13,6 +13,13 @@
   <prerequisites>
     <maven>3.0</maven>
   </prerequisites>
+  <repositories>
+    <repository>
+      <id>repository.jboss.org-public</id>
+      <name>JBoss.org Maven repository</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public</url>
+    </repository>
+  </repositories>
   <dependencyManagement>
     <dependencies>
       <dependency>
